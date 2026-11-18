@@ -3275,7 +3275,14 @@ summary:focus-visible {
   margin-top: 20px;
 }
 
-.inst .facts a {
+.inst > p:not(.meta, .u-note) {
+  max-width: 40em;
+  margin-top: 16px;
+  font-size: 17px;
+}
+
+.inst .facts a,
+.inst > p a {
   text-decoration: underline;
   text-decoration-color: var(--water);
   text-underline-offset: 4px;
