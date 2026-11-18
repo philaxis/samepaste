@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://samepaste.com/sitemap.xml

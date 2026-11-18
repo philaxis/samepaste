@@ -1,0 +1,2460 @@
+/* Home page only (loaded after style.css): the approved landing mock (~/scratch/samepaste-scroll-mock,
+   colour 'screens', zoom 'b', carousel row). Light only; the device drawings are fixed-size boxes
+   (960x520, 700x780 on phones) scaled by --s, which home.js sets. Without the .js class (no script,
+   or reduced motion) the scenes stand one under another at their last frame.
+   Class names that the read pages also use are renamed here: .hend, .hcar, .mt, .typing, .npaste, .hfacts. */
+
+/* The home palette (this file loads only on the home page). The base is a whisper off pure white and
+   the night band a whisper off black; everything drawn on the device screens takes its colour from here. */
+:root {
+  --bg: #fcfcfd;
+  --ink: #1d1d1f;
+  --muted: #6e6e73;
+  --faint: #737378;
+  --line: #d2d2d7;
+  --hairline: #ececee;
+  --water: #0071e3;
+  --accent: #0071e3;
+  --accent-deep: #0062c4;
+  --accent-ink: #0058b0;
+  --accent-soft: color-mix(in srgb, var(--accent) 12%, transparent);
+  --mist: #f5f5f7;
+  --night: #050506;
+  --night-ink: #f5f5f7;
+  --night-muted: #a1a1a6;
+  --night-line: #333336;
+  --shadow: #000;
+  --bezel: #0c0c0e;
+  --edge: #a7a8ac;
+  --edge-2: #d9d9dc;
+  --alu-1: #e4e4e7;
+  --alu-2: #b4b5b9;
+  --screen-ui: #f3f3f4;
+  --bubble: #e9e9eb;
+  --key: #c7c7cc;
+  --gpt-ink: #0d0d0d;
+  --dark-1: #2c2c2e;
+  --dark-2: #3a3a3c;
+  --dark-3: #5a5a5e;
+  --dark-4: #151517;
+  --dark-5: #09090a;
+  --table-1: #b7a68e;
+  --table-2: #5c4a38;
+  --book-page: #fbf6ea;
+  --map-land: #f2efe8;
+  --sun: #fff4dc;
+  --sun-glow: #ffd696;
+  --sky-1: #e9875a;
+  --sky-2: #5b2c4a;
+  --sea-1: #14121c;
+  --sea-2: #3b2a3a;
+  --sea-3: #8a5a52;
+  --poster-sub: #d8d8dc;
+  --font-latin: "Pretendard Variable", Pretendard, system-ui, sans-serif;
+  --font-book: "Noto Serif KR", "Noto Serif CJK KR", "Nanum Myeongjo", "Hiragino Mincho ProN", "Yu Mincho", "Songti SC", "Noto Serif CJK SC", Georgia, serif;
+  color-scheme: light;
+}
+
+body.home {
+  --font: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --serif: var(--font);
+  --sans: var(--font);
+  --grain: url("img/grain.png");
+  --s: 0.8;
+  --rw: 960px;
+  --rh: 520px;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+}
+
+/* Japanese and Chinese: the system's own CJK face first, so kana and hanzi never take Korean forms */
+body.home:lang(ja) {
+  --font: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Yu Gothic", Meiryo, "Noto Sans JP", "Noto Sans CJK JP", "Pretendard Variable", system-ui, sans-serif;
+}
+
+body.home:lang(zh-Hans) {
+  --font: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", "Noto Sans CJK SC", "Pretendard Variable", system-ui, sans-serif;
+}
+
+body.home:lang(zh-Hant) {
+  --font: "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", "Noto Sans CJK TC", "Pretendard Variable", system-ui, sans-serif;
+}
+
+html:has(body.home) {
+  background: var(--bg);
+}
+
+/* header and footer, quieter on this page */
+.home .top {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  padding-top: 0;
+  min-height: 52px;
+  background: color-mix(in srgb, var(--bg) 97%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--shadow) 6%, transparent);
+}
+
+.home .top .lang ul {
+  background: var(--bg);
+}
+
+.home .foot-site {
+  background: var(--mist);
+}
+
+.home .foot-site::before {
+  left: 0;
+  right: 0;
+}
+
+.home .lang-offer {
+  background: var(--mist);
+}
+
+.hm {
+  line-height: normal;
+}
+
+.hm a:hover {
+  color: inherit;
+}
+
+/* buttons: the one blue on the page is what you press and what moves */
+.hm .cta-row {
+  justify-content: center;
+  gap: 12px;
+}
+
+.hm .btn {
+  gap: 8px;
+  padding: 11px 22px;
+  border: 0;
+  border-radius: 980px;
+  background: var(--accent);
+  color: var(--bg);
+  font-size: 17px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.hm .btn:hover {
+  background: var(--accent-deep);
+  color: var(--bg);
+}
+
+.hm .btn.btn-quiet {
+  background: transparent;
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1.5px var(--ink);
+}
+
+.hm .btn.btn-quiet:hover {
+  background: var(--mist);
+  color: var(--ink);
+}
+
+.hm .btn svg {
+  width: 17px;
+  height: 17px;
+  flex: none;
+  fill: currentColor;
+}
+
+.hm .btn:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+/* requirements, the install guide and the checksums share one line under the buttons */
+.hm .dl-line {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0 14px;
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.hm .dl-meta,
+.hm .sums {
+  margin: 0;
+  font-size: 14px;
+}
+
+.hm .dl-meta a,
+.hm .sums summary {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--line);
+  text-underline-offset: 3px;
+}
+
+.hm .sums summary {
+  list-style: none;
+}
+
+.hm .sums summary::-webkit-details-marker {
+  display: none;
+}
+
+.hm .sums[open] {
+  flex-basis: 100%;
+}
+
+.hm .sums dl {
+  max-width: 36em;
+  margin: 0 auto 8px;
+  text-align: left;
+}
+
+.hm .sums dt {
+  font-weight: 600;
+}
+
+.hm .cta .note {
+  margin: 14px auto 0;
+  font-size: 15px;
+}
+
+/* hero: the badge, the headline, the download buttons and, right under them, the playing scenes */
+.hero {
+  padding: 34px 20px 0;
+  text-align: center;
+}
+
+.hero .badge {
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 4px 12px;
+  border-radius: 99px;
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.hero h1 {
+  font-size: clamp(34px, 4.8vw, 62px);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+}
+
+@media (min-width: 701px) {
+  .hero h1 br {
+    display: none;
+  }
+}
+
+.hero .pitch {
+  max-width: 30em;
+  margin: 12px auto 20px;
+  font-size: clamp(17px, 2vw, 21px);
+  line-height: 1.45;
+  color: var(--muted);
+  text-wrap: balance;
+}
+
+/* the rig: devices drawn in a fixed box and scaled */
+.rigwrap {
+  position: relative;
+  width: calc(var(--rw) * var(--s));
+  height: calc(var(--rh) * var(--s));
+  margin: 0 auto;
+}
+
+.rig {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--rw);
+  height: var(--rh);
+  transform: scale(var(--s));
+  transform-origin: 0 0;
+  text-align: left;
+}
+
+/* the lecture scene lays its three devices out side by side on a wider rig */
+@media (min-width: 701px) {
+  .rigwrap.wide {
+    width: calc(1420px * var(--sw, 0.6));
+    height: calc(520px * var(--sw, 0.6));
+  }
+
+  .rigwrap.wide .rig {
+    width: 1420px;
+    transform: scale(var(--sw, 0.6));
+  }
+}
+
+@media (max-width: 1000px) {
+  body.home {
+    --s: 0.6;
+  }
+}
+
+@media (max-width: 700px) {
+  body.home {
+    --s: 0.5;
+    --rw: 700px;
+    --rh: 780px;
+  }
+}
+
+.dev {
+  position: absolute;
+  left: var(--x);
+  bottom: var(--b, 18px);
+  scale: var(--ds, 1);
+  translate: var(--tx, 0px) var(--ty, 0px);
+  transform-origin: 50% 100%;
+  transition:
+    scale 0.8s cubic-bezier(0.22, 0.61, 0.36, 1),
+    translate 0.8s cubic-bezier(0.22, 0.61, 0.36, 1),
+    opacity 0.7s ease;
+}
+
+/* the devices in play come up close; the others shrink, dim and step aside (home.js) */
+.dev.back {
+  opacity: 0.35;
+}
+
+/* stacking is fixed so overlaps always read the same way: phone over tablet over laptop */
+.dev.laptop {
+  z-index: 1;
+}
+
+.dev.tablet {
+  z-index: 2;
+}
+
+.dev.phone {
+  z-index: 3;
+}
+
+@media (max-width: 700px) {
+  .dev {
+    left: var(--mx);
+    bottom: var(--mb, 0px);
+  }
+}
+
+.dev::after {
+  content: "";
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: -14px;
+  z-index: -1;
+  height: 18px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--shadow) 28%, transparent), transparent);
+}
+
+.phone {
+  width: 196px;
+  height: 420px;
+  padding: 7px;
+  border-radius: 38px;
+  background: var(--bezel);
+  box-shadow:
+    0 0 0 1.5px var(--edge),
+    0 0 0 3px var(--edge-2),
+    0 44px 70px -26px color-mix(in srgb, var(--shadow) 50%, transparent);
+}
+
+/* the phone is drawn a size up and set a little lower than the laptop's base, so it reads as in front */
+.dev.phone {
+  --pb: 1.18;
+  --py: 12px;
+  scale: calc(var(--ds, 1) * var(--pb));
+  translate: var(--tx, 0px) calc(var(--ty, 0px) + var(--py));
+}
+
+/* with three devices the phone only has to show that a photo is taken */
+.rigwrap.wide .dev.phone {
+  --pb: 0.9;
+  --py: 0px;
+}
+
+.phone > .screen {
+  border-radius: 31px;
+}
+
+.phone > .screen::before {
+  content: "";
+  position: absolute;
+  top: 9px;
+  left: 50%;
+  z-index: 5;
+  width: 9px;
+  height: 9px;
+  margin-left: -4.5px;
+  border-radius: 50%;
+  background: var(--bezel);
+}
+
+.tablet {
+  width: 600px;
+  height: 384px;
+  padding: 13px;
+  border-radius: 26px;
+  background: var(--bezel);
+  box-shadow:
+    0 0 0 1.5px var(--edge),
+    0 0 0 3px var(--edge-2),
+    0 34px 70px -30px color-mix(in srgb, var(--shadow) 45%, transparent);
+}
+
+.tablet > .screen {
+  border-radius: 12px;
+}
+
+.laptop {
+  width: 690px;
+}
+
+.laptop .lid {
+  width: 620px;
+  height: 398px;
+  margin: 0 auto;
+  padding: 12px 12px 20px;
+  border-radius: 16px 16px 3px 3px;
+  background: var(--bezel);
+  box-shadow: 0 0 0 1.5px var(--edge);
+}
+
+.laptop .lid > .screen {
+  border-radius: 3px;
+}
+
+.laptop .base {
+  position: relative;
+  height: 14px;
+  border-radius: 2px 2px 14px 14px / 2px 2px 10px 10px;
+  background: linear-gradient(var(--alu-1), var(--alu-2));
+  box-shadow: 0 18px 40px -18px color-mix(in srgb, var(--shadow) 50%, transparent);
+}
+
+.laptop .base::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 96px;
+  height: 5px;
+  margin-left: -48px;
+  border-radius: 0 0 6px 6px;
+  background: var(--alu-2);
+}
+
+.screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 11px;
+  line-height: normal;
+  text-align: left;
+}
+
+.screen p,
+.screen h4,
+.screen dl,
+.screen dd {
+  margin: 0;
+}
+
+/* shared screen parts */
+.sbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 30px;
+  padding: 0 20px 4px;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.sbar i {
+  position: relative;
+  display: inline-block;
+  width: 16px;
+  height: 8px;
+  border: 1px solid var(--ink);
+  border-radius: 2px;
+}
+
+.sbar i::after {
+  content: "";
+  position: absolute;
+  inset: 1px 4px 1px 1px;
+  background: var(--ink);
+}
+
+.win {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+}
+
+.tabs {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 30px;
+  padding: 0 8px;
+  background: var(--screen-ui);
+}
+
+.tab {
+  min-width: 150px;
+  padding: 6px 12px;
+  border-radius: 7px 7px 0 0;
+  background: var(--bg);
+  font-size: 10px;
+}
+
+.urlrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 32px;
+  padding: 0 10px;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.urlrow .ctl {
+  display: flex;
+  gap: 9px;
+  font-size: 12px;
+  color: var(--faint);
+}
+
+.url {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  height: 22px;
+  padding: 0 12px;
+  border-radius: 11px;
+  background: var(--screen-ui);
+  font-size: 10.5px;
+  color: var(--dark-2);
+}
+
+.taskbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  height: 30px;
+  border-top: 1px solid var(--hairline);
+  background: var(--screen-ui);
+}
+
+.taskbar b {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  background: var(--key);
+}
+
+.taskbar b:first-child {
+  background: var(--ink);
+}
+
+.page {
+  position: relative;
+  flex: 1;
+}
+
+/* step visibility: home.js sets st1..st13 cumulatively; the HTML carries them all (the last frame) */
+.s1,
+.s2,
+.s3,
+.s4,
+.s5,
+.s6,
+.s7,
+.s10,
+.s13,
+.x1,
+.x2,
+.x3,
+.x6,
+.x7 {
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* both ends of a hand-off light up: where it leaves and where it lands (in quickly, out slowly).
+   Drawn as a box-shadow ring with a gap, so no focus outline is ever animated. */
+.hend {
+  transition: box-shadow 0.6s ease;
+}
+
+.hend.lit {
+  box-shadow:
+    0 0 0 3px var(--bg),
+    0 0 0 6px var(--accent);
+  transition-duration: 0.3s;
+}
+
+.scene:not(.st1) .s1,
+.scene:not(.st2) .s2,
+.scene:not(.st3) .s3,
+.scene:not(.st4) .s4,
+.scene:not(.st5) .s5,
+.scene:not(.st6) .s6,
+.scene:not(.st7) .s7,
+.scene:not(.st10) .s10,
+.scene:not(.st13) .s13 {
+  opacity: 0;
+}
+
+.scene.st1 .x1,
+.scene.st2 .x2,
+.scene.st3 .x3,
+.scene.st6 .x6,
+.scene.st7 .x7 {
+  opacity: 0;
+}
+
+.sel3,
+.sel11 {
+  transition: box-shadow 0.6s ease;
+}
+
+.scene.st3:not(.st5) .sel3,
+.scene.st11:not(.st13) .sel11 {
+  box-shadow:
+    0 0 0 2px var(--bg),
+    0 0 0 4px var(--accent);
+  transition-duration: 0.3s;
+}
+
+.sel1 {
+  margin: -1px -2px;
+  padding: 1px 2px;
+  border-radius: 2px;
+  transition:
+    background-color 0.6s ease,
+    color 0.6s ease;
+}
+
+.scene.st1:not(.st3) .sel1,
+.scene.st8:not(.st10) .sel8 {
+  background: var(--accent);
+  color: var(--bg);
+  transition-duration: 0.3s;
+}
+
+/* codes: an SMS and a sign-in page */
+.msg-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px 10px;
+  border-bottom: 1px solid var(--hairline);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.msg-head .av {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--bubble);
+  font-size: 10px;
+  color: var(--muted);
+}
+
+.msg-body {
+  padding: 16px 12px;
+}
+
+.when {
+  margin-bottom: 10px;
+  font-size: 9px;
+  text-align: center;
+  color: var(--faint);
+}
+
+.bubble {
+  width: 150px;
+  padding: 10px 12px;
+  border-radius: 16px 16px 16px 4px;
+  background: var(--bubble);
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.bubble b {
+  font-weight: 700;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 8px;
+  padding: 5px 10px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  font-size: 10.5px;
+  font-weight: 600;
+  transition:
+    background 0.25s,
+    color 0.25s,
+    border-color 0.25s;
+}
+
+.scene.st1 .chip.press {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.login {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.login .card {
+  width: 268px;
+  text-align: center;
+}
+
+.login h4 {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.login p {
+  margin: 6px 0 18px;
+  font-size: 10.5px;
+  color: var(--muted);
+}
+
+/* six boxes, one digit each; the first is focused until the code lands */
+.code {
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+}
+
+.code span {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 44px;
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  font-size: 19px;
+  font-weight: 600;
+  transition:
+    border-color 0.25s,
+    background-color 0.25s;
+}
+
+.code span > * {
+  grid-area: 1 / 1;
+}
+
+.code b {
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.scene.st2:not(.st3) .code span:first-child {
+  border-color: var(--ink);
+}
+
+.scene.st3 .code span {
+  border-color: var(--mist);
+  background: var(--mist);
+}
+
+.code .hcar {
+  width: 1.5px;
+  height: 20px;
+  background: var(--ink);
+  animation: hm-blink 1s steps(1) infinite;
+}
+
+/* a blinking caret keeps its animation, so hide it outright once the text is in */
+.scene.st1 .hcar.x1,
+.scene.st3 .hcar.x3 {
+  visibility: hidden;
+}
+
+@keyframes hm-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.login .go {
+  display: grid;
+  place-items: center;
+  height: 38px;
+  margin-top: 14px;
+  border-radius: 10px;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 11.5px;
+  font-weight: 600;
+  transition: background-color 0.25s;
+}
+
+.scene:not(.st3) .login .go {
+  background: var(--key);
+}
+
+/* camera */
+.cam {
+  position: absolute;
+  inset: 0;
+  background: var(--night);
+  color: var(--bg);
+}
+
+.cam .view {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 56px;
+  height: 258px;
+  overflow: hidden;
+}
+
+.cam .ctrls {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 26px;
+}
+
+.cam .shutter {
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  border: 3px solid var(--bg);
+  border-radius: 50%;
+}
+
+.cam .shutter::after {
+  content: "";
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--bg);
+  transition: transform 0.15s;
+}
+
+.scene.st1:not(.st2) .cam .shutter::after {
+  transform: scale(0.86);
+}
+
+.cam .thumb {
+  width: 34px;
+  height: 34px;
+  overflow: hidden;
+  border: 1.5px solid var(--bg);
+  border-radius: 8px;
+  background: var(--dark-1);
+}
+
+.cam .ring {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--dark-1);
+}
+
+.cam .modes {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 86px;
+  font-size: 9px;
+  letter-spacing: 0.02em;
+  text-align: center;
+  color: var(--key);
+}
+
+.cam .modes b {
+  margin: 0 8px;
+  font-weight: 700;
+  color: var(--bg);
+}
+
+.flash {
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+  background: var(--bg);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.scene.st1 .flash {
+  animation: hm-flash 0.5s ease-out;
+}
+
+@keyframes hm-flash {
+  from {
+    opacity: 0.9;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* the photo: a dark lecture room, the projector screen lit, heads in front */
+.room {
+  background:
+    linear-gradient(180deg, transparent 58%, var(--dark-2)),
+    radial-gradient(95% 60% at 50% 30%, var(--dark-2), var(--dark-4) 68%, var(--dark-5));
+}
+
+.room .scr {
+  position: absolute;
+  left: 16px;
+  top: 46px;
+  width: 150px;
+  height: 100px;
+  overflow: hidden;
+  transform: perspective(340px) rotateY(-13deg) rotateX(3deg);
+  box-shadow:
+    0 0 0 2px var(--bezel),
+    0 0 38px 8px color-mix(in srgb, var(--mist) 16%, transparent);
+}
+
+.room .scr .slide {
+  transform: scale(0.5);
+  transform-origin: 0 0;
+}
+
+.room .heads {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.room .heads path {
+  stroke: var(--dark-3);
+  stroke-width: 1;
+}
+
+.room.mini {
+  position: relative;
+  width: 182px;
+  height: 258px;
+  margin-top: -6px;
+  transform: scale(0.19);
+  transform-origin: 0 0;
+}
+
+/* the slide itself: 300x200, scaled per place it shows */
+.slide {
+  position: relative;
+  width: 300px;
+  height: 200px;
+  padding: 14px 14px 0;
+  overflow: hidden;
+  background: var(--screen-ui);
+  color: var(--ink);
+  font-family: var(--font-latin);
+  line-height: 1.2;
+  text-align: left;
+}
+
+.sl-h {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.sl-h b {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.sl-h span {
+  font-size: 8px;
+  color: var(--muted);
+}
+
+.sl-d {
+  display: block;
+  width: 272px;
+  height: 56px;
+  margin-top: 10px;
+}
+
+.sl-eq {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 110px;
+  display: grid;
+  place-items: center;
+  height: 68px;
+}
+
+.sl-eq .katex {
+  font-size: 13px;
+}
+
+.sl-f {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 7px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 7px;
+  color: var(--faint);
+}
+
+.tex .katex-display {
+  margin: 0;
+}
+
+/* the lassoed part of the slide: the equation */
+.crop {
+  --k: 0.5;
+  position: relative;
+  flex: none;
+  width: calc(280px * var(--k));
+  height: calc(68px * var(--k));
+  overflow: hidden;
+  background: var(--screen-ui);
+}
+
+.crop .slide {
+  transform: scale(var(--k)) translate(-10px, -110px);
+  transform-origin: 0 0;
+}
+
+.flyer .ph:not(.crop) .slide {
+  transform: scale(0.24);
+  transform-origin: 0 0;
+}
+
+/* search: the Samepaste PC window (history and search) and a chat on the phone */
+.spw {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+}
+
+.spw .tbar {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--line);
+  background: var(--mist);
+  font-size: 10.5px;
+  font-weight: 650;
+}
+
+.spw .tbar img {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+}
+
+.spw .tbar .wc {
+  display: flex;
+  gap: 16px;
+  margin-left: auto;
+  font-weight: 400;
+  color: var(--faint);
+}
+
+.sfind {
+  position: relative;
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  margin: 12px 16px 2px;
+  padding: 0 11px;
+  border: 1.5px solid var(--line);
+  border-radius: 9px;
+  font-size: 11.5px;
+  transition: border-color 0.25s;
+}
+
+.scene.st1 .sfind {
+  border-color: var(--ink);
+}
+
+.sfind svg,
+.msearch svg {
+  flex: none;
+  width: 13px;
+  height: 13px;
+  color: var(--muted);
+}
+
+.sfind .stack {
+  display: grid;
+  align-items: center;
+}
+
+.sfind .stack > * {
+  display: flex;
+  grid-area: 1 / 1;
+  align-items: center;
+}
+
+.sfind .ph {
+  color: var(--faint);
+}
+
+.sfind .q {
+  font-weight: 600;
+}
+
+.sfind .hcar {
+  width: 1.5px;
+  height: 15px;
+  margin: 0 1px;
+  background: var(--ink);
+  animation: hm-blink 1s steps(1) infinite;
+}
+
+.sfind .hcar.x1 {
+  position: absolute;
+  left: 31px;
+  top: 7px;
+}
+
+.slist {
+  position: relative;
+  flex: 1;
+}
+
+.slist > div {
+  position: absolute;
+  inset: 0;
+  padding: 0 16px;
+}
+
+.sday {
+  margin: 12px 0 4px 8px;
+  font-size: 9.5px;
+  font-weight: 600;
+  color: var(--faint);
+}
+
+.sitem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  border-bottom: 1px solid var(--mist);
+  border-radius: 8px;
+  font-size: 10.5px;
+}
+
+.sitem .mt {
+  margin-left: auto;
+  font-size: 9.5px;
+  white-space: nowrap;
+  color: var(--faint);
+}
+
+.sitem .tn {
+  flex: none;
+  width: 30px;
+  height: 22px;
+  border-radius: 4px;
+  background: var(--line);
+}
+
+.sitem mark {
+  padding: 0 1px;
+  border-radius: 2px;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.sitem.photo {
+  align-items: flex-start;
+  transition: box-shadow 0.25s;
+}
+
+.sitem.photo .bookph {
+  flex: none;
+  width: 150px;
+  height: 100px;
+  border-radius: 6px;
+  font-size: 8px;
+}
+
+.sitem .cap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 4px;
+  font-weight: 600;
+}
+
+.sitem .cap small {
+  font-size: 9.5px;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.sitem.photo .mt {
+  padding-top: 4px;
+}
+
+/* a photo of an open book page lying on a table; drawn in em so it scales with font-size */
+.bookph {
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(120% 90% at 30% 20%, var(--table-1), var(--table-2));
+}
+
+.bookph::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--grain);
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.bookph .pg {
+  position: absolute;
+  left: 13%;
+  top: 7%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+  width: 80%;
+  height: 104%;
+  padding: 1.2em 1em 0 1.7em;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--shadow) 20%, transparent), transparent 12%),
+    var(--book-page);
+  box-shadow: 0 0.6em 1.4em color-mix(in srgb, var(--shadow) 40%, transparent);
+  color: var(--dark-1);
+  text-align: left;
+  transform: rotate(-3deg);
+}
+
+.bookph .pg i {
+  display: block;
+  height: 0.34em;
+  border-radius: 0.17em;
+  background: var(--alu-2);
+}
+
+.bookph .pg b {
+  position: relative;
+  font-family: var(--font-book);
+  font-size: 0.8em;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+}
+
+.bookph .hit::after {
+  content: "";
+  position: absolute;
+  inset: -0.25em -0.35em;
+  border: 0.2em solid var(--accent);
+  border-radius: 0.3em;
+  background: var(--accent-soft);
+}
+
+.mbar {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: 14px;
+  display: flex;
+  align-items: center;
+  min-height: 60px;
+  padding: 6px 6px 6px 7px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+
+.mbar .mprev {
+  flex: none;
+  width: 66px;
+  height: 46px;
+  border-radius: 9px;
+  font-size: 3.6px;
+}
+
+.mbar .mph {
+  position: absolute;
+  left: 14px;
+  font-size: 10.5px;
+  color: var(--faint);
+}
+
+.mbar .send {
+  width: 26px;
+  height: 26px;
+  margin-left: auto;
+  border-radius: 50%;
+  background: var(--ink);
+}
+
+/* ChatGPT composer: a big rounded box with a soft shadow; attachments sit on top of the text */
+.prompt {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 9px;
+  width: 360px;
+  padding: 10px 10px 10px 14px;
+  border-radius: 24px;
+  background: var(--bg);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--shadow) 7%, transparent),
+    0 8px 24px -6px color-mix(in srgb, var(--shadow) 14%, transparent);
+}
+
+.prompt .ph {
+  color: var(--faint);
+}
+
+.prompt .att {
+  border-radius: 10px;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--shadow) 8%, transparent);
+}
+
+.prompt .row {
+  display: flex;
+  align-self: stretch;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 24px;
+  font-size: 10.5px;
+  color: var(--gpt-ink);
+}
+
+.prompt .row .stack {
+  display: grid;
+}
+
+.prompt .row .stack > * {
+  grid-area: 1 / 1;
+}
+
+.prompt .send {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--gpt-ink);
+}
+
+.prompt .send svg {
+  width: 11px;
+  height: 11px;
+}
+
+/* addresses: a booking page on the PC, a map app on the phone */
+.booking {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  align-content: start;
+  gap: 34px;
+  padding: 24px 40px;
+}
+
+.booking .ok {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px 3px 7px;
+  border: 1px solid var(--ink);
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.booking .ok svg {
+  width: 10px;
+  height: 10px;
+}
+
+.booking h4 {
+  margin: 10px 0 14px;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.booking dl div {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  align-items: baseline;
+  gap: 10px;
+  padding: 8px 0;
+  border-top: 1px solid var(--hairline);
+  font-size: 11px;
+}
+
+.booking dt {
+  font-size: 10px;
+  color: var(--faint);
+}
+
+.booking dd {
+  font-weight: 600;
+}
+
+.booking dd span {
+  font-weight: 500;
+}
+
+/* exhibition poster: a photo, low sun over dark water, with grain */
+.poster {
+  position: relative;
+  width: 150px;
+  height: 200px;
+  margin-top: 4px;
+  overflow: hidden;
+  border-radius: 2px;
+  background:
+    radial-gradient(circle at 62% 34%, var(--sun) 0 7%, color-mix(in srgb, var(--sun-glow) 70%, transparent) 11%, transparent 30%),
+    linear-gradient(180deg, var(--sky-1) 0%, var(--sky-2) 57%, var(--sea-1) 57.4%, var(--sea-2) 78%, var(--sea-3) 100%);
+  box-shadow: 0 8px 20px -6px color-mix(in srgb, var(--shadow) 35%, transparent);
+}
+
+.poster::before {
+  content: "";
+  position: absolute;
+  left: calc(62% - 6px);
+  top: 58%;
+  width: 12px;
+  height: 34%;
+  background: radial-gradient(50% 100% at 50% 0, color-mix(in srgb, var(--mist) 70%, transparent), transparent);
+}
+
+.poster::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--grain);
+  opacity: 0.4;
+}
+
+.poster b {
+  position: absolute;
+  left: 10px;
+  bottom: 22px;
+  z-index: 1;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--mist);
+}
+
+.poster small {
+  position: absolute;
+  left: 10px;
+  bottom: 11px;
+  z-index: 1;
+  font-size: 7px;
+  color: var(--poster-sub);
+}
+
+.mapapp {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--map-land);
+}
+
+.mapapp > svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.mapapp .sbar {
+  position: relative;
+  z-index: 2;
+}
+
+.msearch {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: 36px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 17px;
+  background: var(--bg);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--shadow) 14%, transparent);
+  font-size: 10px;
+  transition: box-shadow 0.25s;
+}
+
+.msearch svg {
+  width: 12px;
+  height: 12px;
+}
+
+.scene.st2 .msearch {
+  box-shadow:
+    0 2px 8px color-mix(in srgb, var(--shadow) 14%, transparent),
+    0 0 0 1.5px var(--ink);
+}
+
+.msearch .stack {
+  display: grid;
+  flex: 1;
+  min-width: 0;
+}
+
+.msearch .stack > * {
+  grid-area: 1 / 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.msearch .ph {
+  color: var(--faint);
+}
+
+.msearch .q {
+  font-weight: 600;
+}
+
+.mpin {
+  position: absolute;
+  left: 50%;
+  top: 176px;
+  z-index: 1;
+  width: 26px;
+  margin-left: -13px;
+  transition:
+    transform 0.4s cubic-bezier(0.3, 1.5, 0.5, 1),
+    opacity 0.2s;
+}
+
+.mpin svg {
+  display: block;
+  width: 26px;
+  height: 34px;
+  filter: drop-shadow(0 3px 3px color-mix(in srgb, var(--shadow) 30%, transparent));
+}
+
+.js .scene:not(.st4) .mpin {
+  opacity: 0;
+  transform: translateY(-30px);
+}
+
+.mme {
+  position: absolute;
+  left: 22px;
+  top: 230px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--muted);
+  box-shadow:
+    0 0 0 3px var(--bg),
+    0 0 0 9px color-mix(in srgb, var(--muted) 18%, transparent);
+}
+
+.msheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+  padding: 8px 14px 18px;
+  border-radius: 18px 18px 0 0;
+  background: var(--bg);
+  box-shadow: 0 -4px 16px color-mix(in srgb, var(--shadow) 12%, transparent);
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.js .scene:not(.st5) .msheet {
+  transform: translateY(105%);
+}
+
+.msheet::before {
+  content: "";
+  display: block;
+  width: 30px;
+  height: 4px;
+  margin: 0 auto 10px;
+  border-radius: 2px;
+  background: var(--line);
+}
+
+.msheet b {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.msheet small {
+  display: block;
+  margin: 3px 0 10px;
+  overflow: hidden;
+  font-size: 9.5px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--muted);
+}
+
+.msheet .dir {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 13px;
+  border-radius: 14px;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.msheet .dir svg {
+  width: 11px;
+  height: 11px;
+}
+
+/* tablet notes */
+.notes {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.ntools {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 34px;
+  padding: 0 14px;
+  border-bottom: 1px solid var(--hairline);
+  font-size: 10px;
+  color: var(--muted);
+}
+
+.ntools .pen {
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--ink);
+  border-radius: 50%;
+}
+
+.ntools .pen.f {
+  background: var(--ink);
+}
+
+.npage {
+  position: relative;
+  flex: 1;
+  background: repeating-linear-gradient(var(--bg) 0 25px, var(--hairline) 25px 26px);
+}
+
+.npage .title {
+  position: absolute;
+  left: 28px;
+  top: 14px;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.npage svg.hand {
+  position: absolute;
+  left: 24px;
+  top: 46px;
+}
+
+.npaste {
+  position: absolute;
+  left: 300px;
+  top: 40px;
+  width: 230px;
+  height: 172px;
+  overflow: hidden;
+  border-radius: 4px;
+  box-shadow: 0 0 0 1px var(--line);
+}
+
+.npaste .slide {
+  transform: scale(0.7);
+  transform-origin: 0 0;
+}
+
+.npaste::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: radial-gradient(ellipse at 50% 45%, transparent 55%, color-mix(in srgb, var(--shadow) 14%, transparent));
+}
+
+.npaste::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 2px var(--ink);
+}
+
+.slot {
+  position: absolute;
+  left: 300px;
+  top: 40px;
+  width: 230px;
+  height: 172px;
+}
+
+/* lecture: three devices */
+.tablet.sm {
+  width: 440px;
+  height: 282px;
+  padding: 10px;
+  border-radius: 20px;
+}
+
+.tablet.sm .npage .title {
+  left: 18px;
+  top: 10px;
+  font-size: 14px;
+}
+
+.tablet.sm .npage svg.hand {
+  left: 14px;
+  top: 36px;
+}
+
+.tablet.sm .slot,
+.tablet.sm .npaste {
+  left: 196px;
+  top: 16px;
+  width: 210px;
+  height: 140px;
+}
+
+.lasso {
+  position: absolute;
+  left: 7px;
+  top: 77px;
+  z-index: 2;
+  width: 196px;
+  height: 48px;
+  border: 1.5px dashed var(--bg);
+  border-radius: 3px;
+  outline: 1.5px dashed var(--ink);
+  outline-offset: -3px;
+}
+
+/* ChatGPT in the browser: thin tabs, centred greeting and composer; then the thread in one column */
+.win.thin .tabs {
+  height: 22px;
+  padding: 0 6px;
+}
+
+.win.thin .tab {
+  min-width: 120px;
+  padding: 4px 12px;
+  font-size: 9px;
+}
+
+.win.thin .urlrow {
+  gap: 8px;
+  height: 22px;
+  padding: 0 8px;
+}
+
+.win.thin .ctl {
+  gap: 7px;
+  font-size: 9px;
+}
+
+.win.thin .url {
+  height: 15px;
+  border-radius: 8px;
+  font-size: 8.5px;
+}
+
+.chat2 {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  padding-bottom: 24px;
+  color: var(--gpt-ink);
+}
+
+.chat2 h4 {
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+.convo {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 16px calc(50% - 190px) 0;
+  font-size: 10.5px;
+  line-height: 1.6;
+  color: var(--gpt-ink);
+}
+
+.convo .q {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-end;
+  align-items: flex-end;
+  gap: 5px;
+  max-width: 72%;
+}
+
+.convo .q .crop {
+  --k: 0.6;
+  border-radius: 10px;
+}
+
+.convo .q .qb {
+  padding: 6px 12px;
+  border-radius: 16px;
+  background: var(--screen-ui);
+}
+
+.convo .a {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 14px;
+  opacity: 0;
+}
+
+/* asking is its own beat: the question types in, send is pressed, ChatGPT thinks, the answer rises */
+.typing {
+  display: inline-block;
+}
+
+.scene.st6 .typing {
+  animation: hm-typing 0.9s steps(18, end) 0.35s both;
+}
+
+@keyframes hm-typing {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0);
+  }
+}
+
+.scene.st6:not(.st7) .prompt .send {
+  animation: hm-press 0.3s 1.4s;
+}
+
+@keyframes hm-press {
+  50% {
+    transform: scale(0.72);
+  }
+}
+
+.convo .think {
+  position: relative;
+  top: 14px;
+  display: flex;
+  gap: 4px;
+  height: 0;
+}
+
+.think i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--faint);
+  animation: hm-pulse 0.9s infinite;
+}
+
+.think i:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.think i:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes hm-pulse {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+.scene.st7 .think {
+  animation: hm-gone 0.2s 1.1s forwards;
+}
+
+@keyframes hm-gone {
+  to {
+    opacity: 0;
+  }
+}
+
+.scene.st7 .convo .a {
+  animation: hm-rise 0.45s 1.15s forwards;
+}
+
+@keyframes hm-rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* without the loop (no script, reduced motion) the answer simply stands there */
+html:not(.js) .convo .a {
+  opacity: 1;
+}
+
+html:not(.js) .convo .think {
+  display: none;
+}
+
+.convo .a .sel8 {
+  align-self: stretch;
+  margin: -1px -4px;
+  padding: 1px 4px;
+  border-radius: 4px;
+  transition:
+    background-color 0.6s ease,
+    color 0.6s ease;
+}
+
+.convo .a .katex {
+  font-size: 12.5px;
+}
+
+.convo .a .katex-display {
+  margin: 6px 0 2px;
+}
+
+.fig {
+  padding: 5px;
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  background: var(--bg);
+  transition: box-shadow 0.2s;
+}
+
+.fig svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.convo .fig {
+  width: 100px;
+}
+
+.ntext {
+  position: absolute;
+  left: 196px;
+  top: 162px;
+  width: 210px;
+  font-size: 8px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.ntext .katex {
+  font-size: 9.5px;
+}
+
+.ntext .katex-display {
+  margin: 3px 0 0;
+}
+
+.nfig {
+  position: absolute;
+  left: 14px;
+  top: 110px;
+  width: 100px;
+  padding: 3px;
+}
+
+/* the scenes, stacked (no script): each a headline, a line and its devices */
+.story {
+  position: relative;
+}
+
+.scene {
+  padding: 72px 20px 40px;
+  text-align: center;
+}
+
+.scene .copy {
+  max-width: 760px;
+  margin: 0 auto 34px;
+}
+
+.scene .lbl {
+  margin-bottom: 8px;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.scene h2 {
+  font-size: clamp(26px, 3.2vw, 40px);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+}
+
+.scene .line {
+  margin-top: 14px;
+  font-size: clamp(15px, 1.6vw, 19px);
+  line-height: 1.5;
+  color: var(--muted);
+  text-wrap: balance;
+}
+
+.flyer {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 15;
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+  transition: opacity 0.45s ease;
+}
+
+html:not(.js) .flyer {
+  display: none;
+}
+
+.flyer .pill {
+  padding: 9px 16px;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 12px 30px -10px color-mix(in srgb, var(--accent) 55%, transparent);
+  color: var(--bg);
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.flyer .ph {
+  position: relative;
+  width: 64px;
+  height: 48px;
+  overflow: hidden;
+  border: 2px solid var(--bg);
+  border-radius: 8px;
+  background: var(--dark-2);
+  box-shadow: 0 12px 30px -8px color-mix(in srgb, var(--shadow) 50%, transparent);
+}
+
+.flyer .ph.bookph {
+  font-size: 3.4px;
+}
+
+.rowctl {
+  display: none;
+}
+
+/* with the script: one row; scenes slide left and right and advance on their own. The cards beside
+   the current one sit back (smaller, dimmed) and are the way to pick them; a progress bar per scene
+   and a pause button sit inside the current card */
+.js .hm {
+  --slide: min(1180px, 88vw);
+  /* the card fills what the hero leaves of the first screen (hero: badge, headline, line, buttons) */
+  --slideh: max(500px, min(780px, calc(100vh - 350px)));
+}
+
+.js .story {
+  padding: 22px 0 10px;
+}
+
+.js .stage {
+  position: relative;
+  display: flex;
+  gap: 16px;
+  padding: 0 calc((100vw - var(--slide)) / 2);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+
+.js .stage::-webkit-scrollbar {
+  display: none;
+}
+
+.js .scene {
+  position: relative;
+  display: flex;
+  flex: 0 0 var(--slide);
+  flex-direction: column;
+  justify-content: center;
+  height: var(--slideh);
+  padding: 44px 20px 46px;
+  overflow: hidden;
+  border-radius: 28px;
+  background: var(--mist);
+  scroll-snap-align: center;
+  transition:
+    transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1),
+    opacity 0.3s;
+  will-change: transform, opacity;
+}
+
+.js .scene:not(.on) {
+  cursor: pointer;
+  opacity: 0.28;
+  transform: scale(0.88);
+}
+
+.js .scene:not(.on):hover {
+  opacity: 0.45;
+}
+
+/* in the row, device size and position go through one transform (composited everywhere) */
+.js .scene .dev {
+  scale: none;
+  translate: none;
+  transform: translate(var(--tx, 0px), calc(var(--ty, 0px) + var(--py, 0px))) scale(calc(var(--ds, 1) * var(--pb, 1)));
+}
+
+.js .scene.on .dev {
+  will-change: transform, opacity;
+}
+
+/* in the row a card is its headline and its devices; the moving things tell the rest */
+.js .scene .lbl,
+.js .scene .line {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.js .scene .copy {
+  position: relative;
+  z-index: 5;
+  margin-bottom: 6px;
+}
+
+.js .rowctl {
+  position: absolute;
+  left: 50%;
+  bottom: 22px;
+  z-index: 7;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  transform: translateX(-50%);
+}
+
+.rowctl .bars {
+  display: flex;
+  flex: none;
+  gap: 6px;
+  width: 200px;
+}
+
+.rowctl .bar {
+  position: relative;
+  flex: 1;
+  padding: 10px 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.rowctl .bar span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.rowctl .bar i {
+  display: block;
+  height: 2px;
+  overflow: hidden;
+  border-radius: 1px;
+  background: var(--line);
+}
+
+.rowctl .bar b {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}
+
+.rowctl .pause {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--faint);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.rowctl .pause:hover {
+  color: var(--ink);
+}
+
+.rowctl button:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.rowctl svg {
+  width: 13px;
+  height: 13px;
+}
+
+.rowctl .pause .i-play,
+.rowctl .pause.is-paused .i-pause {
+  display: none;
+}
+
+.rowctl .pause.is-paused .i-play {
+  display: block;
+}
+
+/* dark facts */
+.hfacts {
+  padding: 120px 22px;
+  background: var(--night);
+  color: var(--night-ink);
+}
+
+.hfacts .in {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.hfacts .big {
+  font-size: clamp(56px, 11vw, 128px);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1;
+}
+
+.hfacts .cap {
+  max-width: 26em;
+  margin-top: 16px;
+  font-size: clamp(17px, 2vw, 21px);
+  line-height: 1.45;
+  color: var(--night-muted);
+}
+
+.hfacts .grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 40px;
+  margin-top: 96px;
+  padding-top: 36px;
+  border-top: 1px solid var(--night-line);
+}
+
+.hfacts h3 {
+  margin-bottom: 10px;
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.hfacts .grid p {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--night-muted);
+}
+
+.price {
+  padding: 120px 22px;
+  background: var(--mist);
+  text-align: center;
+}
+
+.price h2 {
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+}
+
+.price > p {
+  max-width: 28em;
+  margin: 16px auto 0;
+  font-size: clamp(17px, 2vw, 21px);
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.price > p.note {
+  margin: 10px auto 36px;
+  font-size: 15px;
+}
+
+/* more uses: links to the use pages, guides and the install guide */
+.hmore {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 72px 22px 80px;
+}
+
+.hmore h2 {
+  margin-bottom: 20px;
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.hmore ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 40px;
+}
+
+.hmore li {
+  padding: 14px 0 18px;
+  border-top: 1px solid var(--line);
+}
+
+.hmore a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.hmore li p {
+  margin-top: 4px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.hmore a:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 700px) {
+  .hm .cta-row .btn {
+    justify-content: center;
+    min-width: 256px;
+  }
+
+  .hero {
+    padding-top: 24px;
+  }
+
+  .js .hm {
+    --slide: 92vw;
+    --slideh: calc(100svh - 150px);
+  }
+
+  .rowctl .bars {
+    width: 140px;
+  }
+
+  .hfacts .grid,
+  .hmore ul {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hfacts .grid {
+    gap: 28px;
+    margin-top: 64px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hm *,
+  .hm *::before,
+  .hm *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

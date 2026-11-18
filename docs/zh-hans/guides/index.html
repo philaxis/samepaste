@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-ZCR/f1I+oH8uh9ZNyXAsFLlLx69JqvR7YFJEcf7riWA=' 'sha256-0RB5wFBBWHONHx49or958Jm7knGqgvUIxMjlTF1pK40=' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Samepaste 问题排查：手机和电脑之间复制粘贴不灵的时候</title>
+<meta name="description" content="手机和电脑之间复制粘贴用不了时，照着一步一步来的解决办法。大多数不管你用什么应用都适用。">
+<link rel="canonical" href="https://samepaste.com/zh-hans/guides/">
+<link rel="alternate" hreflang="en" href="https://samepaste.com/guides/">
+<link rel="alternate" hreflang="ko" href="https://samepaste.com/ko/guides/">
+<link rel="alternate" hreflang="ja" href="https://samepaste.com/ja/guides/">
+<link rel="alternate" hreflang="zh-Hans" href="https://samepaste.com/zh-hans/guides/">
+<link rel="alternate" hreflang="zh-Hant" href="https://samepaste.com/zh-hant/guides/">
+<link rel="alternate" hreflang="x-default" href="https://samepaste.com/guides/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Samepaste">
+<meta property="og:title" content="Samepaste 问题排查：手机和电脑之间复制粘贴不灵的时候">
+<meta property="og:description" content="手机和电脑之间复制粘贴用不了时，照着一步一步来的解决办法。大多数不管你用什么应用都适用。">
+<meta property="og:url" content="https://samepaste.com/zh-hans/guides/">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="ko_KR">
+<meta property="og:locale:alternate" content="ja_JP">
+<meta property="og:locale:alternate" content="zh_TW">
+<meta property="og:image" content="https://samepaste.com/og-zh-hans.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Samepaste：Windows 电脑和 Android 手机共用一个剪贴板">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Samepaste 问题排查：手机和电脑之间复制粘贴不灵的时候">
+<meta name="twitter:description" content="手机和电脑之间复制粘贴用不了时，照着一步一步来的解决办法。大多数不管你用什么应用都适用。">
+<meta name="twitter:image" content="https://samepaste.com/og-zh-hans.png">
+<meta name="theme-color" content="#f6f8fa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0a1219" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../../favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="../../mark-small.svg" type="image/svg+xml">
+<script>(function(){try{var d=document.documentElement;if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;d.classList.add('js');setTimeout(function(){if(!window.__motionReady)d.classList.remove('js')},4000)}catch(e){}})();</script>
+<script>(function(){var id="G-CM1P2T01R6";var ls={};try{ls=window.localStorage||{}}catch(e){}
+var get=function(k){try{return ls.getItem?ls.getItem(k):null}catch(e){return null}};
+var tz='';try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||''}catch(e){}
+var ask=!tz||/^(Europe\/|Etc\/|UTC$|UCT$|GMT|Greenwich$|Universal$|Zulu$|Factory$)/.test(tz)||/^(Atlantic\/(Reykjavik|Canary|Madeira|Azores|Faroe)|Africa\/Ceuta|Asia\/(Nicosia|Famagusta)|Arctic\/Longyearbyen|Indian\/(Reunion|Mayotte)|America\/(Guadeloupe|Martinique|Cayenne|Marigot))$/.test(tz);
+var S=window.__spStats={id:id,eu:ask,loaded:false};
+S.load=function(){if(S.loaded)return;S.loaded=true;window.dataLayer=window.dataLayer||[];var g=function(){dataLayer.push(arguments)};window.gtag=g;
+var no={ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied'};
+g('consent','default',Object.assign({region:["AT","BE","BG","HR","CY","CZ","DK","EE","FI","FR","DE","GR","HU","IE","IT","LV","LT","LU","MT","NL","PL","PT","RO","SK","SI","ES","SE","IS","LI","NO","GB","CH","RE","GP","MQ","GF","YT","MF"],wait_for_update:500},no));
+g('consent','default',Object.assign({},no,{analytics_storage:ask?'denied':'granted'}));
+var c=get('sp-consent');if(c==='granted'||c==='denied')g('consent','update',{analytics_storage:c});
+g('set','ads_data_redaction',true);g('set','allow_google_signals',false);g('set','allow_ad_personalization_signals',false);
+g('js',new Date());g('config',id,{allow_google_signals:false,allow_ad_personalization_signals:false});
+var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id='+id;document.head.appendChild(s)};
+if(get('sp-stats')==='off'){window['ga-disable-'+id]=true;return}
+if(!ask||get('sp-consent')==='granted')S.load()})();</script>
+<link rel="stylesheet" href="../../style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Samepaste","applicationCategory":"UtilitiesApplication","operatingSystem":"Windows 10, Windows 11, Android 11+","description":"在 Windows 电脑上复制，到 Android 手机或平板上粘贴，反过来也行。照片和截图也一样。公开测试中，免费下载。","url":"https://samepaste.com/zh-hans/","inLanguage":"zh-Hans","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","name":"philaxis","url":"https://github.com/philaxis"}}</script>
+</head>
+<body>
+<header class="wrap top">
+<a class="brand" href="../../zh-hans/"><img src="../../mark-small.svg" alt="" width="22" height="22">Samepaste</a>
+<nav aria-label="主菜单">
+<a href="../../zh-hans/install/">安装说明</a>
+<a href="../../zh-hans/guides/">问题排查</a>
+<details class="lang"><summary><span class="sr-only">语言: </span>简体中文</summary><ul><li><a href="../../guides/" lang="en" hreflang="en" data-lang="en">English</a></li><li><a href="../../ko/guides/" lang="ko" hreflang="ko" data-lang="ko">한국어</a></li><li><a href="../../ja/guides/" lang="ja" hreflang="ja" data-lang="ja">日本語</a></li><li><a href="../../zh-hans/guides/" lang="zh-Hans" hreflang="zh-Hans" data-lang="zh-hans" aria-current="page">简体中文</a></li><li><a href="../../zh-hant/guides/" lang="zh-Hant" hreflang="zh-Hant" data-lang="zh-hant">繁體中文</a></li></ul></details>
+</nav>
+</header>
+<main class="wrap g-index">
+<h1 class="g-title">卡住的时候</h1>
+<p class="lede">手机和电脑之间复制粘贴用不了时，照着一步一步来的解决办法。大多数不管你用什么应用都适用。</p>
+<ul class="also sp-guides">
+<li><span class="g-name"><a class="nm" href="../../guides/phone-screen-off-stops-sync/" lang="en">Clipboard sync stops when your phone screen is off</a> <span class="tag">英文</span></span><span class="also-line" lang="en">Android puts the app to sleep to save battery. Lift the battery limit for that one app.</span><span class="meta"><span>安卓</span><time datetime="2026-11-18">2026-11-18</time></span></li>
+</ul>
+</main>
+<footer class="wrap foot-site">
+<a class="mail" href="https://github.com/philaxis" data-reveal=""><span class="sr-only">by philaxis</span><span class="typed stay" aria-hidden="true" style="--step:60ms"><span class="word"><span class="t" style="--i:0">b</span><span class="t" style="--i:1">y</span></span><span class="t sp" style="--i:2"> </span><span class="word"><span class="t" style="--i:3">p</span><span class="t" style="--i:4">h</span><span class="t" style="--i:5">i</span><span class="t" style="--i:6">l</span><span class="t" style="--i:7">a</span><span class="t" style="--i:8">x</span><span class="t" style="--i:9">i</span><span class="t end" style="--i:10">s</span></span></span></a>
+<ul class="fine">
+<li>不想思路被打断，所以做了它</li>
+<li><a href="mailto:philaxis.dev@gmail.com">philaxis.dev@gmail.com</a></li>
+<li><a href="../../zh-hans/privacy/">隐私政策</a></li>
+<li class="stats-ctl" hidden><span data-on>访问统计已开启。</span><span data-off>访问统计已关闭。</span> <button type="button" class="linkish" data-stats-toggle data-label-off="关闭统计" data-label-on="开启统计">关闭统计</button></li><li>© 2026 philaxis</li>
+</ul>
+</footer>
+<div class="consent" role="region" aria-label="访问统计" hidden><p>本站可以用 Google Analytics 统计访问量吗？它会设置一个 Cookie；在你允许之前不会向 Google 发送任何内容，也永远看不到你复制的内容。 <a href="../../zh-hans/privacy/">隐私政策</a></p><div class="consent-btns"><button type="button" class="btn btn-quiet" data-consent="denied">不允许</button><button type="button" class="btn btn-quiet" data-consent="granted">允许</button></div></div>
+<script src="../../site.js" defer></script>
+<script src="../../stats.js" defer></script>
+</body>
+</html>

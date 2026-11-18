@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-ZCR/f1I+oH8uh9ZNyXAsFLlLx69JqvR7YFJEcf7riWA=' 'sha256-0RB5wFBBWHONHx49or958Jm7knGqgvUIxMjlTF1pK40=' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Samepaste オープンベータのインストール：Windows と Android</title>
+<meta name="description" content="Samepaste の Windows 版と Android APK のダウンロード、SHA-256 の確認、Windows SmartScreen と Android の「提供元不明のアプリ」の画面の進め方、オープンベータとは何かをまとめました。">
+<link rel="canonical" href="https://samepaste.com/ja/install/">
+<link rel="alternate" hreflang="en" href="https://samepaste.com/install/">
+<link rel="alternate" hreflang="ko" href="https://samepaste.com/ko/install/">
+<link rel="alternate" hreflang="ja" href="https://samepaste.com/ja/install/">
+<link rel="alternate" hreflang="zh-Hans" href="https://samepaste.com/zh-hans/install/">
+<link rel="alternate" hreflang="zh-Hant" href="https://samepaste.com/zh-hant/install/">
+<link rel="alternate" hreflang="x-default" href="https://samepaste.com/install/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Samepaste">
+<meta property="og:title" content="Samepaste オープンベータのインストール：Windows と Android">
+<meta property="og:description" content="Samepaste の Windows 版と Android APK のダウンロード、SHA-256 の確認、Windows SmartScreen と Android の「提供元不明のアプリ」の画面の進め方、オープンベータとは何かをまとめました。">
+<meta property="og:url" content="https://samepaste.com/ja/install/">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="ko_KR">
+<meta property="og:locale:alternate" content="zh_CN">
+<meta property="og:locale:alternate" content="zh_TW">
+<meta property="og:image" content="https://samepaste.com/og-ja.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Samepaste：Windows PC と Android スマホでひとつのクリップボード">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Samepaste オープンベータのインストール：Windows と Android">
+<meta name="twitter:description" content="Samepaste の Windows 版と Android APK のダウンロード、SHA-256 の確認、Windows SmartScreen と Android の「提供元不明のアプリ」の画面の進め方、オープンベータとは何かをまとめました。">
+<meta name="twitter:image" content="https://samepaste.com/og-ja.png">
+<meta name="theme-color" content="#f6f8fa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0a1219" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../../favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="../../mark-small.svg" type="image/svg+xml">
+<script>(function(){try{var d=document.documentElement;if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;d.classList.add('js');setTimeout(function(){if(!window.__motionReady)d.classList.remove('js')},4000)}catch(e){}})();</script>
+<script>(function(){var id="G-CM1P2T01R6";var ls={};try{ls=window.localStorage||{}}catch(e){}
+var get=function(k){try{return ls.getItem?ls.getItem(k):null}catch(e){return null}};
+var tz='';try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||''}catch(e){}
+var ask=!tz||/^(Europe\/|Etc\/|UTC$|UCT$|GMT|Greenwich$|Universal$|Zulu$|Factory$)/.test(tz)||/^(Atlantic\/(Reykjavik|Canary|Madeira|Azores|Faroe)|Africa\/Ceuta|Asia\/(Nicosia|Famagusta)|Arctic\/Longyearbyen|Indian\/(Reunion|Mayotte)|America\/(Guadeloupe|Martinique|Cayenne|Marigot))$/.test(tz);
+var S=window.__spStats={id:id,eu:ask,loaded:false};
+S.load=function(){if(S.loaded)return;S.loaded=true;window.dataLayer=window.dataLayer||[];var g=function(){dataLayer.push(arguments)};window.gtag=g;
+var no={ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied'};
+g('consent','default',Object.assign({region:["AT","BE","BG","HR","CY","CZ","DK","EE","FI","FR","DE","GR","HU","IE","IT","LV","LT","LU","MT","NL","PL","PT","RO","SK","SI","ES","SE","IS","LI","NO","GB","CH","RE","GP","MQ","GF","YT","MF"],wait_for_update:500},no));
+g('consent','default',Object.assign({},no,{analytics_storage:ask?'denied':'granted'}));
+var c=get('sp-consent');if(c==='granted'||c==='denied')g('consent','update',{analytics_storage:c});
+g('set','ads_data_redaction',true);g('set','allow_google_signals',false);g('set','allow_ad_personalization_signals',false);
+g('js',new Date());g('config',id,{allow_google_signals:false,allow_ad_personalization_signals:false});
+var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id='+id;document.head.appendChild(s)};
+if(get('sp-stats')==='off'){window['ga-disable-'+id]=true;return}
+if(!ask||get('sp-consent')==='granted')S.load()})();</script>
+<link rel="stylesheet" href="../../style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Samepaste","applicationCategory":"UtilitiesApplication","operatingSystem":"Windows 10, Windows 11, Android 11+","description":"Windows PC でコピーして、Android のスマホやタブレットで貼り付け。その逆も、写真やスクリーンショットもできます。オープンベータ版を無料でダウンロードできます。","url":"https://samepaste.com/ja/","inLanguage":"ja","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","name":"philaxis","url":"https://github.com/philaxis"}}</script>
+</head>
+<body>
+<header class="wrap top">
+<a class="brand" href="../../ja/"><img src="../../mark-small.svg" alt="" width="22" height="22">Samepaste</a>
+<nav aria-label="メイン">
+<a href="../../ja/install/">インストール</a>
+<a href="../../ja/guides/">困ったとき</a>
+<details class="lang"><summary><span class="sr-only">言語: </span>日本語</summary><ul><li><a href="../../install/" lang="en" hreflang="en" data-lang="en">English</a></li><li><a href="../../ko/install/" lang="ko" hreflang="ko" data-lang="ko">한국어</a></li><li><a href="../../ja/install/" lang="ja" hreflang="ja" data-lang="ja" aria-current="page">日本語</a></li><li><a href="../../zh-hans/install/" lang="zh-Hans" hreflang="zh-Hans" data-lang="zh-hans">简体中文</a></li><li><a href="../../zh-hant/install/" lang="zh-Hant" hreflang="zh-Hant" data-lang="zh-hant">繁體中文</a></li></ul></details>
+</nav>
+</header>
+<main class="wrap guide install">
+<h1 class="g-title">オープンベータをインストール</h1>
+<p class="lede">Samepaste はいまオープンベータです。無料で、当面はストアではなくこのサイトからダウンロードします。Windows PC と Android のスマホやタブレットにインストールして、それぞれ同じ Google アカウントでログインしてください。</p>
+<section class="inst" aria-labelledby="i-windows">
+<h2 class="u-h" id="i-windows">Windows PC</h2>
+<p class="meta">Windows 10 または 11</p>
+<div class="cta"><div class="cta-row"><a class="btn" href="https://github.com/philaxis/samepaste/releases/download/v0.8.0-beta.1/Samepaste-0.8.0-beta.1.exe" data-cta="windows" data-place="install"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M0 0h11.377v11.372H0zm12.623 0H24v11.372H12.623zM0 12.623h11.377V24H0zm12.623 0H24V24H12.623z"/></svg>Windows 版をダウンロード</a></div><dl class="dl-file"><div><dt>ファイル</dt><dd><code>Samepaste-0.8.0-beta.1.exe</code></dd></div><div><dt>SHA-256</dt><dd><code class="sha">643c44801da2eb895424561beaadf9f5133b7ae0b5dfa33b2e20540d6103fdbb</code></dd></div></dl></div>
+<ol class="u-steps">
+<li><h3>インストーラーをダウンロード</h3><p>上のボタンからダウンロードします。ファイルはこのプロジェクトの GitHub のリリースから配布しています。</p></li>
+<li><h3>SmartScreen を通過する</h3><p>ベータ版はまだコード署名をしていないため、「WindowsによってPCが保護されました」と表示されることがあります。「詳細情報」をクリックしてファイルが Samepaste であることを確かめ、「実行」をクリックします。</p></li>
+<li><h3>インストールしてログイン</h3><p>インストーラーの案内に沿って進め、Google でログインします。</p></li>
+</ol>
+
+</section>
+<section class="inst" aria-labelledby="i-android">
+<h2 class="u-h" id="i-android">Android のスマホ・タブレット</h2>
+<p class="meta">Android 11 以降</p>
+<div class="cta"><div class="cta-row"><a class="btn" href="https://github.com/philaxis/samepaste/releases/download/v0.8.0-beta.1/Samepaste-0.8.0-beta.1.apk" data-cta="apk" data-place="install"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M17.6 9.48l1.84-3.18a.38.38 0 0 0-.66-.38l-1.86 3.22A11.4 11.4 0 0 0 12 8.08c-1.77 0-3.43.39-4.92 1.06L5.22 5.92a.38.38 0 0 0-.66.38L6.4 9.48A10.8 10.8 0 0 0 1 18h22a10.8 10.8 0 0 0-5.4-8.52zM7 15.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm10 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5z"/></svg>Android APK をダウンロード</a></div><dl class="dl-file"><div><dt>ファイル</dt><dd><code>Samepaste-0.8.0-beta.1.apk</code></dd></div><div><dt>SHA-256</dt><dd><code class="sha">5fa6e273afc4d0bdbc3ee435fbfec69b49cc401337b91479b229b03c391c7b90</code></dd></div></dl></div>
+<ol class="u-steps">
+<li><h3>APK をダウンロード</h3><p>スマホかタブレットでこのページを開き、上のボタンからダウンロードします。</p></li>
+<li><h3>ブラウザからのインストールを許可</h3><p>ダウンロードしたファイルを開きます。「提供元不明のアプリ」はインストールできないと表示されたら、「設定」をタップして「この提供元のアプリを許可」をオンにし、元の画面に戻ります。</p></li>
+<li><h3>インストールしてログイン</h3><p>「インストール」をタップします。Google Play プロテクトが不明なアプリだと警告したら、そのままインストールを選びます。続けて、PC と同じ Google アカウントでログインします。</p></li>
+</ol>
+<p class="u-note">メニューの名前は、スマホのメーカーによって少しずつ違います。</p>
+</section>
+<p class="u-note">ダウンロードしたファイルを確かめるには、SHA-256 を上の値と比べてください。Windows では PowerShell の Get-FileHash で確認できます。</p>
+<section class="inst" aria-labelledby="i-beta">
+<h2 class="u-h" id="i-beta">オープンベータとは</h2>
+<ul class="facts"><li>無料です。ベータ期間中は何も販売しません。</li><li>正式リリースまでに、機能、見た目、上限が変わったり、不具合が出たりすることがあります。</li><li>不具合やアイデアは <a href="https://github.com/philaxis/samepaste/issues">GitHub の Issue</a> に書き込むか、philaxis.dev@gmail.com までメールでお送りください。</li></ul>
+</section>
+<!-- beta perk: copy pending -->
+</main>
+<footer class="wrap foot-site">
+<a class="mail" href="https://github.com/philaxis" data-reveal=""><span class="sr-only">by philaxis</span><span class="typed stay" aria-hidden="true" style="--step:60ms"><span class="word"><span class="t" style="--i:0">b</span><span class="t" style="--i:1">y</span></span><span class="t sp" style="--i:2"> </span><span class="word"><span class="t" style="--i:3">p</span><span class="t" style="--i:4">h</span><span class="t" style="--i:5">i</span><span class="t" style="--i:6">l</span><span class="t" style="--i:7">a</span><span class="t" style="--i:8">x</span><span class="t" style="--i:9">i</span><span class="t end" style="--i:10">s</span></span></span></a>
+<ul class="fine">
+<li>作業の流れが途切れるのが嫌で作りました</li>
+<li><a href="mailto:philaxis.dev@gmail.com">philaxis.dev@gmail.com</a></li>
+<li><a href="../../ja/privacy/">プライバシー</a></li>
+<li class="stats-ctl" hidden><span data-on>アクセス解析はオンです。</span><span data-off>アクセス解析はオフです。</span> <button type="button" class="linkish" data-stats-toggle data-label-off="オフにする" data-label-on="オンにする">オフにする</button></li><li>© 2026 philaxis</li>
+</ul>
+</footer>
+<div class="consent" role="region" aria-label="アクセス解析" hidden><p>このサイトで Google Analytics を使って訪問数を数えてもいいですか？ Cookie を1つ使います。許可するまで Google には何も送らず、コピーした内容を見ることもありません。 <a href="../../ja/privacy/">プライバシー</a></p><div class="consent-btns"><button type="button" class="btn btn-quiet" data-consent="denied">許可しない</button><button type="button" class="btn btn-quiet" data-consent="granted">許可する</button></div></div>
+<script src="../../site.js" defer></script>
+<script src="../../stats.js" defer></script>
+</body>
+</html>
