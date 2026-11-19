@@ -1,5 +1,5 @@
 /* Home page only (loaded after style.css): the approved landing mock (~/scratch/samepaste-scroll-mock,
-   colour 'screens', zoom 'b', carousel row). Light only; the device drawings are fixed-size boxes
+   colour 'screens', carousel row), with the pile beside the headline (samepaste-site#5). Light only; the device drawings are fixed-size boxes
    (960x520, 700x780 on phones) scaled by --s, which home.js sets. Without the .js class (no script,
    or reduced motion) the scenes stand one under another at their last frame.
    Class names that the read pages also use are renamed here: .hend, .hcar, .mt, .typing, .npaste, .hfacts. */
@@ -318,9 +318,14 @@ html:has(body.home) {
     opacity 0.7s ease;
 }
 
-/* the devices in play come up close; the others shrink, dim and step aside (home.js) */
+/* the devices stand still around the pile; the ones not in the current hand-off only dim (home.js) */
 .dev.back {
   opacity: 0.35;
+}
+
+/* standing the devices up again after a resize happens in place, not as a slide */
+.js .story.settling .dev {
+  transition: none;
 }
 
 /* stacking is fixed so overlaps always read the same way: phone over tablet over laptop */
@@ -1062,7 +1067,8 @@ html:has(body.home) {
   transform-origin: 0 0;
 }
 
-.flyer .ph:not(.crop) .slide {
+.flyer .ph:not(.crop) .slide,
+.pile .ph:not(.crop) .slide {
   transform: scale(0.24);
   transform-origin: 0 0;
 }
@@ -2108,7 +2114,8 @@ html:not(.js) .flyer {
   white-space: nowrap;
 }
 
-.flyer .ph {
+.flyer .ph,
+.pile .ph {
   position: relative;
   width: 64px;
   height: 48px;
@@ -2119,7 +2126,8 @@ html:not(.js) .flyer {
   box-shadow: 0 12px 30px -8px color-mix(in srgb, var(--shadow) 50%, transparent);
 }
 
-.flyer .ph.bookph {
+.flyer .ph.bookph,
+.pile .ph.bookph {
   font-size: 3.4px;
 }
 
@@ -2299,6 +2307,179 @@ html:not(.js) .flyer {
 
 .rowctl .pause.is-paused .i-play {
   display: block;
+}
+
+/* the pile (home.js): one for the whole row. What is copied or shot lands on it as the new top sheet;
+   pasting takes a copy of the top sheet. Drawn as the icon stood up: a frosted glass sheet with the
+   graphite clip in front, graphite sheets behind, up and to the left. Three sheets at most, and only
+   the top one shows what it holds, so the pile never gets busy. */
+.pile {
+  display: none;
+}
+
+.js .story {
+  --pw: 132px;
+  --ph: 88px;
+  --off: 9px;
+  /* from the headline to the top sheet: room for the sheets behind and the clip */
+  --pile-lift: 30px;
+}
+
+.js .story[data-pile="top"] .scene .copy {
+  margin-bottom: calc(var(--pile-lift) + var(--ph) + 18px);
+}
+
+/* beside the headline: the headline is as wide as its longest line, so the pile can stand right of it;
+   the pile is a little taller than the headline, so the devices start a little lower */
+.js .story[data-pile="side"] .scene h2 {
+  width: fit-content;
+  margin-inline: auto;
+}
+
+.js .story[data-pile="side"] .scene .copy {
+  margin-bottom: 20px;
+}
+
+@media (max-width: 1000px) {
+  .js .story {
+    --pw: 104px;
+    --ph: 70px;
+    --off: 7px;
+    --pile-lift: 24px;
+  }
+
+  .js .pile .t {
+    margin: 9px 9px 4px;
+    font-size: 11px;
+  }
+}
+
+.js .pile {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 6;
+  display: block;
+  width: var(--pw);
+  height: var(--ph);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1),
+    opacity 0.4s ease;
+}
+
+.js .pile.placed {
+  opacity: 1;
+}
+
+.pile .sheet {
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background: var(--dark-1);
+  transition:
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.5s ease,
+    opacity 0.5s ease,
+    box-shadow 0.3s ease;
+}
+
+.pile .sheet[data-d="0"] {
+  z-index: 3;
+  background: color-mix(in srgb, var(--bg) 90%, transparent);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--shadow) 12%, transparent),
+    0 16px 30px -14px color-mix(in srgb, var(--shadow) 42%, transparent);
+  backdrop-filter: blur(8px);
+}
+
+.pile .sheet[data-d="1"] {
+  z-index: 2;
+  transform: translate(calc(var(--off) * -1), calc(var(--off) * -1));
+}
+
+.pile .sheet[data-d="2"] {
+  z-index: 1;
+  opacity: 0.35;
+  transform: translate(calc(var(--off) * -2), calc(var(--off) * -2));
+}
+
+.pile .sheet[data-d="3"] {
+  z-index: 0;
+  opacity: 0;
+  transform: translate(calc(var(--off) * -3), calc(var(--off) * -3));
+}
+
+/* a new sheet drops onto the pile from just above it */
+.pile .sheet.enter {
+  opacity: 0;
+  transform: translateY(-16px) scale(1.06);
+  transition: none;
+}
+
+.pile.lit .sheet[data-d="0"] {
+  box-shadow:
+    0 0 0 3px var(--bg),
+    0 0 0 6px var(--accent),
+    0 16px 30px -14px color-mix(in srgb, var(--shadow) 42%, transparent);
+}
+
+.pile .in {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: inherit;
+  transition: opacity 0.3s ease;
+}
+
+.pile .sheet:not([data-d="0"]) .in {
+  opacity: 0;
+}
+
+.pile .t {
+  display: -webkit-box;
+  margin: 12px 12px 6px;
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--ink);
+  text-align: center;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.pile .fit {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  flex: none;
+}
+
+.pile .fit > * {
+  box-shadow: none;
+}
+
+.pile .clip {
+  position: absolute;
+  left: 50%;
+  top: -7px;
+  width: 46%;
+  height: 13px;
+  border-radius: 7px;
+  background: var(--dark-1);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--bg) 62%, transparent);
+  opacity: 0;
+  translate: -50% 0;
+  transition: opacity 0.3s ease;
+}
+
+.pile .sheet[data-d="0"] .clip {
+  opacity: 1;
 }
 
 /* dark facts */
