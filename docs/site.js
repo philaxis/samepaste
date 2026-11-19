@@ -102,6 +102,7 @@
   }
 
   // One line at the very top when the browser prefers another of our languages. Never redirects.
+  // Closing it, or picking a language in the menu, answers it for good in this browser.
   var OFFER = {
     en: ["View this page in English", "Close"],
     ko: ["한국어로 보기", "닫기"],
@@ -122,11 +123,18 @@
   function suggestLanguage() {
     var here = document.querySelector(".lang a[aria-current]");
     var want = preferred();
-    if (!here || !want || want === here.dataset.lang) return;
+    if (!here || !want) return;
     var ls = {};
     try {
       ls = window.localStorage;
     } catch (e) {}
+    var answer = function () {
+      if (ls.setItem) ls.setItem("sp-lang-offer", want);
+    };
+    document.querySelectorAll(".lang a[data-lang]").forEach(function (a) {
+      a.addEventListener("click", answer);
+    });
+    if (want === here.dataset.lang) return;
     if (ls.getItem && ls.getItem("sp-lang-offer") === want) return;
     var link = document.querySelector('.lang a[data-lang="' + want + '"]');
     if (!link) return;
@@ -142,7 +150,7 @@
     x.className = "linkish";
     x.textContent = OFFER[want][1];
     x.addEventListener("click", function () {
-      if (ls.setItem) ls.setItem("sp-lang-offer", want);
+      answer();
       bar.remove();
     });
     bar.appendChild(a);
