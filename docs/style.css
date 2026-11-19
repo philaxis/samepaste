@@ -1,5 +1,5 @@
-/* Hallmark · v2.0.0 · theme: philaxis home world (by request, inherited from philaxis.github.io) · genre: editorial · job: notify (download not public) · hero: split, the name, one sentence and the notify button left, the live two-device demo right · nav: wordmark left, guides and a language menu right · footer: the typed "by philaxis" mast over one fine-print list · signature: the clipboard item as the glowing dot crossing from one device to the other, live, in the hero and in each of four scenes */
-/* Hallmark · critique: one idea per section (the hero loop, four scenes each with its own small demo, the small moves as a ruled list, facts as ruled rows, one price ledger); colour lives only in the dot and the icon; mono only for data (device and file names, codes, dates, addresses) */
+/* Hallmark · v2.0.0 · theme: philaxis home world (by request, inherited from philaxis.github.io) · genre: editorial · job: notify (download not public) · hero: split, the name, one sentence and the notify button left, the live two-device demo right · nav: wordmark left, guides and a language menu right · footer: the typed "by philaxis" mast over one fine-print list · signature: the copied thing itself (the code, the address, the photo) lifting off one device and landing in the other, live, in the hero carousel and in each of four scenes */
+/* Hallmark · critique: one idea per section (the hero loop, four scenes each with its own small demo, the small moves as a ruled list, facts as ruled rows, one price ledger); colour lives only in the water-blue pick and paste marks and the icon, never a glowing dot (user 11-19); mono only for data (device and file names, codes, dates, addresses) */
 /* Hallmark · waive 24b · base.css spacing (18px, 22px, 14px rows) copied verbatim from the philaxis personal site · the inherited world's own rhythm, kept so the two sites read as one */
 /* Hallmark · waive 26b · no control on these pages can ever be disabled · the only buttons copy the notify address, pause the hero demo and answer the visit statistics question */
 /* Hallmark · waive 44c · scene, guide and privacy pages open with a crumb and a title, not a hero; the home hero holds the demo beside the text · read pages start reading at once, the scene demo sits right under the lede */
@@ -2194,6 +2194,31 @@ body:lang(zh) {
   white-space: normal;
 }
 
+/* No glowing dot anywhere (user 11-19). base.css draws one riding typed text and as the field caret:
+   typed text arrives letter by letter without it, and the caret is the plain text bar the home
+   carousel uses (.hcar in home.css). */
+.t::after {
+  content: none;
+}
+
+.caret::after,
+.demo .caret::after {
+  left: 0.12em;
+  bottom: -0.2em;
+  width: 1.5px;
+  height: 1.15em;
+  border-radius: 0;
+  background: var(--ink);
+  box-shadow: none;
+  animation: caret 1s steps(1) infinite;
+}
+
+@keyframes caret {
+  50% {
+    opacity: 0;
+  }
+}
+
 h1,
 h2,
 h3 {
@@ -2534,40 +2559,41 @@ summary:focus-visible {
   animation: shutter 0.5s ease-out;
 }
 
-.sp-trail {
+/* the copied thing itself crosses between the two devices (site.js), like the home carousel's flyers */
+.sp-fly {
   position: absolute;
-  inset: 0;
-  z-index: 2;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-  pointer-events: none;
-}
-
-.sp-trail path {
-  fill: none;
-  stroke: var(--water);
-  stroke-width: 1.5;
-  stroke-dasharray: 1;
-  stroke-linecap: round;
-  opacity: 0;
-}
-
-.sp-dot {
-  position: absolute;
-  top: -8px;
-  left: -8px;
+  top: 0;
+  left: 0;
   z-index: 3;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: var(--dot);
-  box-shadow:
-    0 0 2px color-mix(in srgb, var(--water) 55%, transparent),
-    0 0 12px color-mix(in srgb, var(--glow) 60%, transparent);
   opacity: 0;
   pointer-events: none;
-  will-change: transform;
+  will-change: transform, opacity;
+}
+
+.sp-fly-text {
+  max-width: 220px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--ink);
+  box-shadow: 0 10px 20px -12px var(--shade);
+  color: var(--bg);
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sp-fly-pic {
+  width: 72px;
+}
+
+.sp-fly-pic svg {
+  display: block;
+  width: 100%;
+  border-radius: 4px;
+  box-shadow: 0 10px 20px -10px var(--shade);
 }
 
 @keyframes shutter {

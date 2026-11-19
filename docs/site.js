@@ -36,14 +36,12 @@
     return [r.left + r.width / 2 - box.left, r.top + r.height / 2 - box.top];
   }
 
-  /** Moves a demo's glowing dot along an arc between two elements; p in [0, 1], or null to hide it. */
+  /** Moves a demo's copy of the item along an arc between two elements; p in [0, 1], or null to hide it. */
   function flyer(el) {
-    var dot = el.querySelector(".sp-dot");
-    var trail = el.querySelector(".sp-trail path");
+    var item = el.querySelector(".sp-fly");
     return function (a, b, p) {
       if (p === null) {
-        dot.style.opacity = "0";
-        trail.style.opacity = "0";
+        item.style.opacity = "0";
         return;
       }
       var box = el.getBoundingClientRect();
@@ -54,11 +52,13 @@
       var q = 1 - Math.pow(1 - p, 3); // ease-out cubic
       var x = (1 - q) * (1 - q) * s[0] + 2 * (1 - q) * q * cx + q * q * e[0];
       var y = (1 - q) * (1 - q) * s[1] + 2 * (1 - q) * q * cy + q * q * e[1];
-      dot.style.opacity = "1";
-      dot.style.transform = "translate(" + x + "px," + y + "px)";
-      trail.setAttribute("d", "M" + s[0] + " " + s[1] + " Q" + cx + " " + cy + " " + e[0] + " " + e[1]);
-      trail.style.opacity = String(0.55 * Math.sin(Math.PI * Math.min(1, p * 1.1)));
-      trail.style.strokeDashoffset = String(1 - q);
+      var w = item.offsetWidth;
+      // kept inside the panel, so a long address next to the phone's edge is never cut off
+      var left = Math.max(8, Math.min(box.width - w - 8, x - w / 2));
+      // fades in as it lifts off and out as the pasted copy appears under it
+      item.style.opacity = String(Math.min(1, p / 0.12, (1 - p) / 0.2));
+      item.style.transform =
+        "translate(" + left + "px," + (y - item.offsetHeight / 2) + "px) scale(" + (0.92 + Math.sin(Math.PI * q) * 0.12) + ")";
     };
   }
 
@@ -68,16 +68,17 @@
   }
 
   // A scene, played once each time it comes into view: the thing is picked up on the first
-  // device (selected, or the camera flashes), rides the dot across and is pasted on the second.
+  // device (selected, or the camera flashes), a copy of it flies across and is pasted on the second.
   var S_PICK = 500;
   var S_FLY = [1100, 1900];
-  var S_DONE = 1950;
+  var S_DONE = 1750;
   var S_END = 2600;
 
   function scene(el) {
     var fly = flyer(el);
     var src = el.querySelector(".sd-src");
-    var dst = el.querySelector(".sd-dst");
+    // lands on the pasted text itself when there is one (a field), else on the pasted picture
+    var dst = el.querySelector(".sd-dst .sd-val") || el.querySelector(".sd-dst");
     var raf = 0;
     var start = 0;
     function frame(now) {
