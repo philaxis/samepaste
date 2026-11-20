@@ -1,9 +1,9 @@
 // The home page carousel (home.mjs, home.css). Runs only with the .js class (the boot script leaves
 // it off for reduced motion); without it the scenes stand stacked at their last frame.
 //  - one row of scene cards; the one in front plays its own timeline, then the row moves on
-//  - every hand-off goes through the pile: what is copied or shot rises onto it as the new top sheet,
-//    and pasting takes a copy of the top sheet down to the other device. There is one pile for the
-//    whole row, so it keeps what earlier scenes put on it; three sheets show, only the top one's content
+//  - the pile is the shared clipboard: copying puts the item on it at once (nothing flies there); the
+//    item copied gets a brief graphite ring and slides onto the clipboard's glass, one thing at a time.
+//    Pasting drops a small copy of it from the clipboard into the field, which then gets the same ring
 //  - bars, side cards, arrow keys and swipes pick a scene (window.spScenePick: bar, arrow, swipe)
 //  - each visit starts on a random scene (kept for the session), told to stats.js as window.spFirstScene
 //  - stats.js hears "sp:scene" whenever the scene in front changes (scene_view / scene_leave)
@@ -16,14 +16,13 @@
   var clamp = function (v, a, b) {
     return Math.min(b === undefined ? 1 : b, Math.max(a || 0, v));
   };
-  var ease = function (x) {
-    return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
-  };
+  // one motion language: every move uses this curve (home.css --motion) at 250–350 ms
+  var MOTION = "cubic-bezier(0.16, 1, 0.3, 1)";
   // the devices of a scene come up to at most 1.3x their drawn size, as large as the card lets them
   var SPOT = 1.3;
   // timelines are written at a calm pace and played a little faster; each scene lingers 2s on its finished state
   var SPEED = 0.8;
-  // hand-offs are written as [copied, pasted]; viaPile stretches each into rise, rest on the pile, fall
+  // hand-offs are written as [copied, pasted]
   var RAW = {
     basic: { marks: [600, 1200, 2200], flights: [[1200, 2200]] },
     map: { marks: [600, 1200, 2200, 2800, 3300], flights: [[1200, 2200]] },
@@ -36,34 +35,17 @@
         [11700, 12600],
       ],
     },
-    search: { marks: [600, 1300, 2100, 2700, 3500, 4100], flights: [[2700, 3500]] },
+    // the photo is in the message field the moment it is pasted (step 5)
+    search: { marks: [600, 1300, 2100, 2700, 3500], flights: [[2700, 3500]] },
   };
-  var LEG = { up: 700, rest: 500, down: 700 };
-  // a hand-off becomes [leaves, lands on the pile, leaves the pile, pasted]; what comes after it moves later
-  function viaPile(raw) {
-    var len = LEG.up + LEG.rest + LEG.down;
-    var later = function (t) {
-      return raw.flights.reduce(function (s, f) {
-        return s + (f[1] <= t ? len - (f[1] - f[0]) : 0);
-      }, 0);
-    };
-    return {
-      marks: raw.marks.map(function (m) {
-        return m + later(m);
-      }),
-      flights: raw.flights.map(function (f) {
-        var a = f[0] + later(f[0]);
-        return [a, a + LEG.up, a + LEG.up + LEG.rest, a + len];
-      }),
-    };
-  }
   var PLANS = {};
   Object.keys(RAW).forEach(function (k) {
-    var r = viaPile(RAW[k]);
-    var marks = r.marks.map(function (m) {
+    var raw = RAW[k];
+    var marks = raw.marks.map(function (m) {
       return m * SPEED;
     });
-    var flights = r.flights.map(function (f) {
+    // [copied, pasted], played
+    var flights = raw.flights.map(function (f) {
       return f.map(function (t) {
         return t * SPEED;
       });
@@ -74,7 +56,12 @@
 
   // where the pile sits: right of the headline, level with it, at one place for every card (right of the
   // widest headline). Phones, and wide screens where that does not fit, put it just under the headline.
+  // The pile is the icon: the front sheet plus the sheet behind it, up and left by --off (home.css), so
+  // it is placed by that whole shape and the front sheet's centre sits off/2 right of and below it.
   var SIDE_GAP = 44;
+  function off() {
+    return parseFloat(getComputedStyle(story).getPropertyValue("--off")) || 0;
+  }
   function sideX() {
     var half = Math.max.apply(
       null,
@@ -82,7 +69,7 @@
         return p.copy.querySelector("h2").offsetWidth / 2;
       }),
     );
-    return story.clientWidth / 2 + half + SIDE_GAP + pileEl.offsetWidth / 2;
+    return story.clientWidth / 2 + half + SIDE_GAP + off() + pileEl.offsetWidth / 2;
   }
   function setMode() {
     if (innerWidth <= 700) return (story.dataset.pile = "top");
@@ -147,63 +134,63 @@
     story.style.setProperty("--sw", sw.toFixed(4));
   }
 
-  // the pile: sheets newest first; the top one shows what will be pasted, the two behind are plain
+  // the pile is the icon and never changes: a glass front sheet with its clip and a graphite sheet behind.
+  // What is copied sits straight on the glass, one thing at a time: a copy slides it down in from under
+  // the clip while the thing before slides on down and out through the bottom edge. Nothing fades.
   var pile = (function () {
-    var sheets = [];
     var placed = false;
-    var make = function (inner) {
+    var make = function (d) {
       var s = document.createElement("div");
       s.className = "sheet";
+      s.dataset.d = d;
       s.innerHTML = '<div class="in"></div><i class="clip"></i>';
-      if (inner) s.firstChild.appendChild(inner);
       return s;
     };
-    // a text item is written on the sheet; a photo is shown whole, scaled to fit
+    // a text item is written on the glass; a photo is shown whole, scaled to fit
     var content = function (fly) {
       var item = fly.firstElementChild;
+      var c = document.createElement("div");
+      c.className = "c";
       if (item.classList.contains("pill")) {
         var t = document.createElement("p");
         t.className = "t";
-        t.textContent = item.textContent;
-        return t;
+        t.textContent = item.textContent.replace(/(\d)-(\d)/g, "$1\u2011$2"); // keep "41-1" on one line
+        c.appendChild(t);
+        return c;
       }
       var w = item.offsetWidth;
       var h = item.offsetHeight;
-      var k = Math.min((pileEl.offsetWidth - 18) / w, (pileEl.offsetHeight - 18) / h);
+      var k = Math.min((pileEl.offsetWidth * 0.7) / w, (pileEl.offsetHeight * 0.6) / h);
       var box = document.createElement("div");
       box.className = "fit";
       box.style.width = w + "px";
       box.style.height = h + "px";
       box.style.transform = "translate(-50%, -50%) scale(" + k.toFixed(3) + ")";
       box.appendChild(item.cloneNode(true));
-      return box;
+      c.appendChild(box);
+      return c;
     };
-    var lay = function () {
-      sheets.forEach(function (s, d) {
-        s.dataset.d = d;
-      });
-      while (sheets.length > 3) {
-        var old = sheets.pop();
-        old.dataset.d = 3;
-        setTimeout(old.remove.bind(old), 600);
-      }
+    pileEl.appendChild(make(1));
+    pileEl.appendChild(make(0));
+    var tray = pileEl.querySelector('.sheet[data-d="0"] .in');
+    var front = function () {
+      return tray.querySelector('.note[data-n="0"]');
     };
-    // before anything is copied the pile is the icon: a glass sheet in front of a graphite one
-    [make(), make()].forEach(function (s) {
-      pileEl.appendChild(s);
-      sheets.push(s);
-    });
-    lay();
     return {
       push: function (fly) {
-        var s = make(content(fly));
-        s.classList.add("enter");
-        pileEl.appendChild(s);
-        sheets.unshift(s);
-        void s.offsetWidth;
-        s.classList.remove("enter");
-        lay();
+        [].forEach.call(tray.querySelectorAll(".note"), function (n) {
+          n.dataset.n = 1;
+          setTimeout(n.remove.bind(n), 400);
+        });
+        var n = document.createElement("div");
+        n.className = "note drop";
+        n.dataset.n = 0;
+        n.appendChild(content(fly));
+        tray.appendChild(n);
+        void n.offsetWidth;
+        n.classList.remove("drop");
       },
+      front: front,
       // x, y: the centre of the top sheet, in the story's own coordinates
       at: function (x, y) {
         var t = "translate(" + (x - pileEl.offsetWidth / 2).toFixed(1) + "px," + (y - pileEl.offsetHeight / 2).toFixed(1) + "px)";
@@ -234,37 +221,44 @@
     var y0 = cardBox(p).y0;
     if (story.dataset.pile === "side") {
       var h = p.copy.querySelector("h2");
-      return pile.at(sideX(), y0 + p.copy.offsetTop + h.offsetTop + h.offsetHeight / 2);
+      return pile.at(sideX(), y0 + p.copy.offsetTop + h.offsetTop + h.offsetHeight / 2 + off() / 2);
     }
     var lift = parseFloat(getComputedStyle(story).getPropertyValue("--pile-lift")) || 0;
-    pile.at(story.clientWidth / 2, y0 + p.copy.offsetTop + p.copy.offsetHeight + lift + pileEl.offsetHeight / 2);
+    pile.at(story.clientWidth / 2 + off() / 2, y0 + p.copy.offsetTop + p.copy.offsetHeight + lift + pileEl.offsetHeight / 2);
   }
 
-  function fly(fl, from, to, f, leg) {
-    var a = from.getBoundingClientRect();
+  // a paste: a copy of what is on the clipboard leaves it and drops into the field, shrinking to it on
+  // the way; it starts exactly over the original, so it peels off rather than appearing
+  var ghost = document.createElement("div");
+  ghost.className = "pile pdrop";
+  ghost.setAttribute("aria-hidden", "true");
+  document.body.appendChild(ghost);
+  function drop(to, ms) {
+    var f = pile.front();
+    if (!f) return;
+    var a = f.getBoundingClientRect();
     var b = to.getBoundingClientRect();
-    var fw = fl.offsetWidth;
-    var fh = fl.offsetHeight;
-    var e = ease(f);
-    var ax = a.left + a.width / 2;
-    var ay = a.top + a.height / 2;
-    var bx = b.left + b.width / 2;
-    var by = b.top + b.height / 2;
-    var arc = Math.abs(bx - ax) / (Math.abs(bx - ax) + Math.abs(by - ay) + 1);
-    var x = ax + (bx - ax) * e - fw / 2;
-    var y = ay + (by - ay) * e - fh / 2 - Math.sin(Math.PI * e) * Math.min(70, innerHeight * 0.08) * arc;
-    // it shrinks a little as it settles on the pile and grows back on the way down
-    var s = leg === 1 ? 1 - 0.25 * e : 0.75 + 0.25 * e;
-    fl.style.transform = "translate(" + x + "px," + y + "px) scale(" + (s + Math.sin(Math.PI * e) * 0.12).toFixed(3) + ")";
-    fl.style.opacity = leg === 1 ? clamp(f / 0.12) * clamp((1 - f) / 0.1) : clamp(f / 0.15);
+    var k = clamp(Math.min(b.width / a.width, b.height / a.height), 0.25, 0.6);
+    ghost.replaceChildren(f.cloneNode(true));
+    ghost.style.setProperty("--pw", f.offsetWidth + "px");
+    ghost.style.setProperty("--ph", f.offsetHeight + "px");
+    ghost.animate(
+      [
+        { transform: "translate(" + a.left + "px," + a.top + "px) scale(1)", opacity: 1 },
+        { transform: "translate(" + (b.left + b.width / 2 - (a.width * k) / 2) + "px," + (b.top + b.height / 2 - (a.height * k) / 2) + "px) scale(" + k + ")", opacity: 1 },
+      ],
+      { duration: ms, easing: MOTION },
+    );
   }
+
   function hideFlyers(p) {
+    ghost.getAnimations().forEach(function (a) {
+      a.cancel();
+    });
     p.flights.forEach(function (fl) {
-      fl.fly.style.opacity = 0;
       fl.src.classList.remove("lit");
       fl.dst.classList.remove("lit");
     });
-    pileEl.classList.remove("lit");
   }
 
   var ENTER = 350;
@@ -332,11 +326,9 @@
     var shown = -1;
     var focusKey = "";
     var endKey = "";
-    var legs = p.flights.map(function () {
-      return 0;
-    });
-    var landed = p.flights.map(function () {
-      return false;
+    // each hand-off [copied, pasted] does its one-off things once per cycle
+    var done = p.flights.map(function () {
+      return { copied: false, dropped: false };
     });
     var loop = function (now) {
       var el = now - t0;
@@ -351,18 +343,18 @@
         shown = step;
         setStep(p, step);
       }
-      // each hand-off: [leaves, lands on the pile, leaves the pile, pasted]
+      // copied: it is on the clipboard at once. Pasted: a copy of it drops into the field just before
       p.flights.forEach(function (fl, k) {
         var f = plan.flights[k];
-        if (c < f[0]) landed[k] = false;
-        var leg = c >= f[0] && c < f[1] ? 1 : c >= f[2] && c < f[3] ? 2 : 0;
-        if (leg === 1) fly(fl.fly, fl.src, pileEl, (c - f[0]) / (f[1] - f[0]), 1);
-        else if (leg === 2) fly(fl.fly, pileEl, fl.dst, (c - f[2]) / (f[3] - f[2]), 2);
-        else if (legs[k]) fl.fly.style.opacity = 0;
-        legs[k] = leg;
-        if (c >= f[1] && !landed[k]) {
-          landed[k] = true;
+        var d = done[k];
+        if (c < f[0]) d.copied = d.dropped = false;
+        if (step > 0 && c >= f[0] && !d.copied) {
+          d.copied = true;
           pile.push(fl.fly);
+        }
+        if (step > 0 && c >= f[1] - 250 && c < f[1] && !d.dropped) {
+          d.dropped = true;
+          drop(fl.dst, 250);
         }
       });
       // in play: the pair of the current hand-off, held until a hand-off between another pair begins
@@ -384,24 +376,20 @@
         focusKey = key;
         focus(p, lit);
       }
-      // where it leaves lights up as it rises, the pile while it holds it, where it lands as it comes down
       var on = function (a, b) {
         return step > 0 && c >= a && c < b;
       };
+      // the same brief graphite ring where it is copied and where it is pasted
       var ends = plan.flights.map(function (f) {
-        return [on(f[0] - 250, f[1] + 150), on(f[2] - 100, f[3] + 300)];
+        return [on(f[0], f[0] + 350), on(f[1], f[1] + 350)];
       });
-      var held = plan.flights.some(function (f) {
-        return on(f[1], f[3]);
-      });
-      var ek = ends.join() + held;
+      var ek = ends.join();
       if (ek !== endKey) {
         endKey = ek;
         p.flights.forEach(function (fl, k) {
           fl.src.classList.toggle("lit", ends[k][0]);
           fl.dst.classList.toggle("lit", ends[k][1]);
         });
-        pileEl.classList.toggle("lit", held);
       }
       var prog = paused ? 1 : clamp(el / (ENTER + plan.hold));
       barFills.forEach(function (f, k) {
@@ -532,7 +520,7 @@
       .map(function (p) {
         return p.id;
       })
-      .indexOf(sessionStorage.getItem("sp-first-scene"));
+      .indexOf((/[?&]scene=(\w+)/.exec(location.search) || [])[1] || sessionStorage.getItem("sp-first-scene"));
   } catch (e) {}
   if (first < 0) {
     first = Math.floor(Math.random() * parts.length);

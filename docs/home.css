@@ -4,25 +4,35 @@
    or reduced motion) the scenes stand one under another at their last frame.
    Class names that the read pages also use are renamed here: .hend, .hcar, .mt, .typing, .npaste, .hfacts. */
 
-/* The home palette (this file loads only on the home page). The base is a whisper off pure white and
-   the night band a whisper off black; everything drawn on the device screens takes its colour from here. */
+/* The home palette (this file loads only on the home page), from the app (clipsync app-look and its
+   colors.xml): the icon's light grey ground, graphite ink and slab, white cards, milky glass only on
+   what floats. The ground, card, slab, highlight and glass tokens are sitewide (samepaste.css); this
+   page is light only, so it pins the light values. No blue: what moves and what lights up is
+   graphite, and words found by a search take the app's own highlight band. Everything drawn on the
+   device screens takes its colour from here too. */
 :root {
   --bg: #fcfcfd;
-  --ink: #1d1d1f;
-  --muted: #6e6e73;
+  --ground: #f1f1f3;
+  --card: #fff;
+  --ink: #1f1f22;
+  --muted: #55555c;
   --faint: #737378;
   --line: #d2d2d7;
   --hairline: #ececee;
-  --water: #0071e3;
-  --accent: #0071e3;
-  --accent-deep: #0062c4;
-  --accent-ink: #0058b0;
-  --accent-soft: color-mix(in srgb, var(--accent) 12%, transparent);
+  --hair: rgb(31 31 34 / 0.09);
+  --water: var(--slab);
+  --glow: #8a8a90;
+  --accent: var(--slab);
+  /* one motion language for the hand-off: this curve at 250–350 ms (home.js MOTION) */
+  --motion: cubic-bezier(0.16, 1, 0.3, 1);
+  --accent-deep: var(--ink);
+  --accent-ink: var(--ink);
+  --accent-soft: var(--highlight);
   --mist: #f5f5f7;
-  --night: #050506;
-  --night-ink: #f5f5f7;
-  --night-muted: #a1a1a6;
-  --night-line: #333336;
+  --night: #1c1c1f;
+  --night-ink: #f2f2f4;
+  --night-muted: #a6a6ae;
+  --night-line: rgb(255 255 255 / 0.08);
   --shadow: #000;
   --bezel: #0c0c0e;
   --edge: #a7a8ac;
@@ -50,6 +60,13 @@
   --sea-2: #3b2a3a;
   --sea-3: #8a5a52;
   --poster-sub: #d8d8dc;
+  /* the pile's front sheet, the icon's glass: milky enough to read on, the graphite sheet a soft
+     shadow through it */
+  --sheet-glass: rgb(248 248 250 / 0.8);
+  --sheet-sheen: rgb(255 255 255 / 0.55);
+  --sheet-rim: rgb(255 255 255 / 0.75);
+  --sheet-edge: rgb(0 0 0 / 0.1);
+  --sheet-drop: rgb(0 0 0 / 0.24);
   --font-latin: "Pretendard Variable", Pretendard, system-ui, sans-serif;
   --font-book: "Noto Serif KR", "Noto Serif CJK KR", "Nanum Myeongjo", "Hiragino Mincho ProN", "Yu Mincho", "Songti SC", "Noto Serif CJK SC", Georgia, serif;
   color-scheme: light;
@@ -63,7 +80,7 @@ body.home {
   --s: 0.8;
   --rw: 960px;
   --rh: 520px;
-  background: var(--bg);
+  background: var(--ground);
   color: var(--ink);
   font-family: var(--font);
 }
@@ -82,7 +99,7 @@ body.home:lang(zh-Hant) {
 }
 
 html:has(body.home) {
-  background: var(--bg);
+  background: var(--ground);
 }
 
 /* header and footer, quieter on this page */
@@ -92,16 +109,16 @@ html:has(body.home) {
   z-index: 20;
   padding-top: 0;
   min-height: 52px;
-  background: var(--bg);
-  border-bottom: 1px solid color-mix(in srgb, var(--shadow) 6%, transparent);
+  background: var(--ground);
+  border-bottom: 1px solid var(--hair);
 }
 
 .home .top .lang ul {
-  background: var(--bg);
+  background: var(--card);
 }
 
 .home .foot-site {
-  background: var(--mist);
+  background: var(--ground);
 }
 
 .home .foot-site::before {
@@ -110,61 +127,26 @@ html:has(body.home) {
 }
 
 .home .lang-offer {
-  background: var(--mist);
+  background: var(--card);
 }
 
 .hm {
   line-height: normal;
 }
 
-.hm a:hover {
+.hm a:hover:not(.btn) {
   color: inherit;
 }
 
-/* buttons: the one blue on the page is what you press and what moves */
+/* buttons: the app's own two (samepaste.css .btn), the graphite slab and the white chip */
 .hm .cta-row {
   justify-content: center;
   gap: 12px;
 }
 
 .hm .btn {
-  gap: 8px;
-  padding: 11px 22px;
-  border: 0;
-  border-radius: 980px;
-  background: var(--accent);
-  color: var(--bg);
   font-size: 17px;
-  font-weight: 500;
   white-space: nowrap;
-}
-
-.hm .btn:hover {
-  background: var(--accent-deep);
-  color: var(--bg);
-}
-
-.hm .btn.btn-quiet {
-  background: transparent;
-  color: var(--ink);
-  box-shadow: inset 0 0 0 1.5px var(--ink);
-}
-
-.hm .btn.btn-quiet:hover {
-  background: var(--mist);
-  color: var(--ink);
-}
-
-.hm .btn svg {
-  width: 17px;
-  height: 17px;
-  flex: none;
-  fill: currentColor;
-}
-
-.hm .btn:focus-visible {
-  outline: 2px solid var(--ink);
-  outline-offset: 3px;
 }
 
 /* requirements, the install guide and the checksums share one line under the buttons */
@@ -228,11 +210,12 @@ html:has(body.home) {
 
 .hero .badge {
   display: inline-block;
-  margin-bottom: 10px;
-  padding: 4px 12px;
+  margin-bottom: 12px;
+  padding: 5px 14px;
   border-radius: 99px;
-  background: var(--accent-soft);
-  color: var(--accent-ink);
+  background: var(--card);
+  box-shadow: 0 1px 3px var(--glass-shadow-near);
+  color: var(--muted);
   font-size: 14px;
   font-weight: 600;
 }
@@ -595,24 +578,38 @@ html:has(body.home) {
 .x1,
 .x2,
 .x3,
+.x5,
 .x6,
 .x7 {
   transition:
-    opacity 0.5s ease,
-    transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+    opacity 0.3s var(--motion),
+    transform 0.3s var(--motion);
 }
 
-/* both ends of a hand-off light up: where it leaves and where it lands (in quickly, out slowly).
-   Drawn as a box-shadow ring with a gap, so no focus outline is ever animated. */
+/* where it is copied and where it is pasted get the same brief graphite ring (rule below the selections,
+   which it outranks). Drawn as a box-shadow ring with a gap, so no focus outline is ever animated. */
 .hend {
-  transition: box-shadow 0.6s ease;
+  transition: box-shadow 0.3s var(--motion);
 }
 
-.hend.lit {
-  box-shadow:
-    0 0 0 3px var(--bg),
-    0 0 0 6px var(--accent);
-  transition-duration: 0.3s;
+/* a paste is there at once: the field's hint goes, and what was pasted comes in on the motion curve */
+.code .hcar,
+.msearch .ph,
+.mbar .mph,
+.prompt .ph {
+  transition: none;
+}
+
+.code b,
+.msearch .q,
+.mbar .mprev,
+.npaste,
+.prompt .att,
+.ntext,
+.nfig {
+  transition:
+    opacity 0.25s var(--motion),
+    box-shadow 0.3s var(--motion);
 }
 
 .scene:not(.st1) .s1,
@@ -630,6 +627,7 @@ html:has(body.home) {
 .scene.st1 .x1,
 .scene.st2 .x2,
 .scene.st3 .x3,
+.scene.st5 .x5,
 .scene.st6 .x6,
 .scene.st7 .x7 {
   opacity: 0;
@@ -637,15 +635,20 @@ html:has(body.home) {
 
 .sel3,
 .sel11 {
-  transition: box-shadow 0.6s ease;
+  transition: box-shadow 0.3s var(--motion);
 }
 
-.scene.st3:not(.st5) .sel3,
+.scene.st3:not(.st4) .sel3,
 .scene.st11:not(.st13) .sel11 {
   box-shadow:
     0 0 0 2px var(--bg),
     0 0 0 4px var(--accent);
-  transition-duration: 0.3s;
+}
+
+.story .scene .hend.lit {
+  box-shadow:
+    0 0 0 3px var(--bg),
+    0 0 0 6px var(--accent);
 }
 
 .sel1 {
@@ -653,15 +656,14 @@ html:has(body.home) {
   padding: 1px 2px;
   border-radius: 2px;
   transition:
-    background-color 0.6s ease,
-    color 0.6s ease;
+    background-color 0.3s var(--motion),
+    color 0.3s var(--motion);
 }
 
 .scene.st1:not(.st3) .sel1,
 .scene.st8:not(.st10) .sel8 {
   background: var(--accent);
   color: var(--bg);
-  transition-duration: 0.3s;
 }
 
 /* codes: an SMS and a sign-in page */
@@ -724,6 +726,12 @@ html:has(body.home) {
     background 0.25s,
     color 0.25s,
     border-color 0.25s;
+}
+
+.chip svg {
+  flex: none;
+  width: 11px;
+  height: 11px;
 }
 
 .scene.st1 .chip.press {
@@ -1073,13 +1081,14 @@ html:has(body.home) {
   transform-origin: 0 0;
 }
 
-/* search: the Samepaste PC window (history and search) and a chat on the phone */
+/* search: the Samepaste PC window as the app draws it (the grey ground, the search field and the
+   settings circle as floating glass, history rows with hairlines) and a chat on the phone */
 .spw {
   position: absolute;
   inset: 0;
   display: flex;
   flex-direction: column;
-  background: var(--bg);
+  background: var(--ground);
 }
 
 .spw .tbar {
@@ -1089,8 +1098,6 @@ html:has(body.home) {
   gap: 6px;
   height: 28px;
   padding: 0 12px;
-  border-bottom: 1px solid var(--line);
-  background: var(--mist);
   font-size: 10.5px;
   font-weight: 650;
 }
@@ -1103,29 +1110,78 @@ html:has(body.home) {
 
 .spw .tbar .wc {
   display: flex;
-  gap: 16px;
+  gap: 18px;
   margin-left: auto;
-  font-weight: 400;
-  color: var(--faint);
+  color: var(--muted);
+}
+
+.spw .tbar .wc svg {
+  width: 9px;
+  height: 9px;
+}
+
+/* the app's floating glass (GlassButton): the search field and settings circle drawn in the PC
+   window, and the carousel's pause button */
+.glass {
+  background:
+    linear-gradient(180deg, var(--glass-sheen), transparent 45%),
+    var(--glass-fill);
+  box-shadow:
+    inset 0 1px 0 var(--glass-rim-top),
+    inset 0 0 0 1px var(--glass-rim),
+    inset 0 -1px 1px var(--glass-rim-bottom),
+    0 8px 20px var(--glass-shadow),
+    0 2px 5px var(--glass-shadow-near);
+  backdrop-filter: blur(18px) saturate(1.5);
+}
+
+/* as in the app: a solid plate of the same colour where blur is unavailable or transparency reduced */
+@supports not (backdrop-filter: blur(1px)) {
+  .glass {
+    background: var(--glass-solid);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass {
+    background: var(--glass-solid);
+    backdrop-filter: none;
+  }
+}
+
+.stop {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 16px 2px;
 }
 
 .sfind {
   position: relative;
   display: flex;
-  flex: none;
+  flex: 1;
   align-items: center;
   gap: 8px;
-  height: 32px;
-  margin: 12px 16px 2px;
-  padding: 0 11px;
-  border: 1.5px solid var(--line);
-  border-radius: 9px;
+  height: 34px;
+  padding: 0 14px;
+  border-radius: 17px;
   font-size: 11.5px;
-  transition: border-color 0.25s;
 }
 
-.scene.st1 .sfind {
-  border-color: var(--ink);
+.sgear {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  color: var(--ink);
+}
+
+.sgear svg {
+  width: 14px;
+  height: 14px;
 }
 
 .sfind svg,
@@ -1133,7 +1189,7 @@ html:has(body.home) {
   flex: none;
   width: 13px;
   height: 13px;
-  color: var(--muted);
+  color: var(--ink);
 }
 
 .sfind .stack {
@@ -1148,7 +1204,7 @@ html:has(body.home) {
 }
 
 .sfind .ph {
-  color: var(--faint);
+  color: var(--muted);
 }
 
 .sfind .q {
@@ -1165,8 +1221,8 @@ html:has(body.home) {
 
 .sfind .hcar.x1 {
   position: absolute;
-  left: 31px;
-  top: 7px;
+  left: 35px;
+  top: 9.5px;
 }
 
 .slist {
@@ -1181,19 +1237,19 @@ html:has(body.home) {
 }
 
 .sday {
-  margin: 12px 0 4px 8px;
+  margin: 10px 0 2px;
   font-size: 9.5px;
   font-weight: 600;
-  color: var(--faint);
+  color: var(--muted);
 }
 
 .sitem {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 8px;
-  border-bottom: 1px solid var(--mist);
-  border-radius: 8px;
+  padding: 7px 4px;
+  border-bottom: 1px solid var(--hair);
+  border-radius: 6px;
   font-size: 10.5px;
 }
 
@@ -1201,7 +1257,7 @@ html:has(body.home) {
   margin-left: auto;
   font-size: 9.5px;
   white-space: nowrap;
-  color: var(--faint);
+  color: var(--muted);
 }
 
 .sitem .tn {
@@ -1212,11 +1268,12 @@ html:has(body.home) {
   background: var(--line);
 }
 
+/* the app's highlight band on the words a search found */
 .sitem mark {
-  padding: 0 1px;
-  border-radius: 2px;
-  background: var(--accent-soft);
-  color: var(--accent);
+  padding: 0 2px;
+  border-radius: 3px;
+  background: var(--highlight);
+  color: var(--ink);
 }
 
 .sitem.photo {
@@ -1235,19 +1292,32 @@ html:has(body.home) {
 .sitem .cap {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  padding-top: 4px;
-  font-weight: 600;
+  gap: 5px;
+  padding-top: 2px;
 }
 
+/* text in a photo: the app's box with the text-in-photo icon */
 .sitem .cap small {
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+  padding: 5px 8px;
+  border-radius: 6px;
+  background: var(--card);
   font-size: 9.5px;
-  font-weight: 400;
+  line-height: 1.4;
+}
+
+.sitem .cap small svg {
+  flex: none;
+  width: 11px;
+  height: 11px;
+  margin-top: 1px;
   color: var(--muted);
 }
 
 .sitem.photo .mt {
-  padding-top: 4px;
+  padding-top: 2px;
 }
 
 /* a photo of an open book page lying on a table; drawn in em so it scales with font-size */
@@ -1301,13 +1371,14 @@ html:has(body.home) {
   letter-spacing: -0.01em;
 }
 
+/* the found line in the photo: the app's highlight band, see-through so the words stay readable */
 .bookph .hit::after {
   content: "";
   position: absolute;
   inset: -0.25em -0.35em;
-  border: 0.2em solid var(--accent);
   border-radius: 0.3em;
-  background: var(--accent-soft);
+  background: color-mix(in srgb, var(--highlight) 45%, transparent);
+  box-shadow: inset 0 0 0 0.15em var(--highlight);
 }
 
 .mbar {
@@ -2103,12 +2174,15 @@ html:not(.js) .flyer {
   display: none;
 }
 
+/* what crosses over is the app's graphite slab, with a plain soft shadow */
 .flyer .pill {
   padding: 9px 16px;
   border-radius: 999px;
-  background: var(--accent);
-  box-shadow: 0 12px 30px -10px color-mix(in srgb, var(--accent) 55%, transparent);
-  color: var(--bg);
+  background: var(--slab-btn);
+  box-shadow:
+    inset 0 1px 0 var(--slab-rim),
+    0 12px 26px -10px var(--glass-shadow);
+  color: var(--slab-ink);
   font-size: 15px;
   font-weight: 600;
   white-space: nowrap;
@@ -2174,7 +2248,7 @@ html:not(.js) .flyer {
   padding: 44px 20px 46px;
   overflow: hidden;
   border-radius: 28px;
-  background: var(--mist);
+  background: var(--card);
   scroll-snap-align: center;
   transition:
     transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1),
@@ -2227,7 +2301,7 @@ html:not(.js) .flyer {
   z-index: 7;
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 14px;
   transform: translateX(-50%);
 }
 
@@ -2272,22 +2346,22 @@ html:not(.js) .flyer {
   transform-origin: 0 50%;
 }
 
+/* pause and play: the app's round floating glass button (.glass) */
 .rowctl .pause {
   display: grid;
   flex: none;
   place-items: center;
-  width: 28px;
-  height: 28px;
+  width: 36px;
+  height: 36px;
   border: 0;
   border-radius: 50%;
-  background: transparent;
-  color: var(--faint);
+  color: var(--ink);
   cursor: pointer;
-  transition: color 0.2s;
+  transition: transform 0.2s ease;
 }
 
 .rowctl .pause:hover {
-  color: var(--ink);
+  transform: scale(1.06);
 }
 
 .rowctl button:focus-visible {
@@ -2309,20 +2383,23 @@ html:not(.js) .flyer {
   display: block;
 }
 
-/* the pile (home.js): one for the whole row. What is copied or shot lands on it as the new top sheet;
-   pasting takes a copy of the top sheet. Drawn as the icon stood up: a frosted glass sheet with the
-   graphite clip in front, graphite sheets behind, up and to the left. Three sheets at most, and only
-   the top one shows what it holds, so the pile never gets busy. */
+/* the pile (home.js): one for the whole row. Drawn as the app icon (clipsync spike/assets/icon/
+   make_icons.mjs): square sheets with corners 22% of their side, a frosted glass sheet in front with
+   the graphite clip across its top edge, and one graphite sheet behind it, up and to the left by 30%
+   of a side. The clipboard never changes. What is copied is a note lying on the front sheet: a new
+   note slides down from under the clip, the one before is pushed back and shows just above it, and
+   older ones go behind that one and are removed. Nothing fades. */
 .pile {
   display: none;
 }
 
 .js .story {
-  --pw: 132px;
-  --ph: 88px;
-  --off: 9px;
-  /* from the headline to the top sheet: room for the sheets behind and the clip */
-  --pile-lift: 30px;
+  /* plain lengths: home.js reads --pile-lift and --off. --off is 29.6% of --pw, as on the icon */
+  --pw: 96px;
+  --ph: var(--pw);
+  --off: 28px;
+  /* from the headline to the front sheet: room for the sheet behind and the clip */
+  --pile-lift: 40px;
 }
 
 .js .story[data-pile="top"] .scene .copy {
@@ -2342,15 +2419,14 @@ html:not(.js) .flyer {
 
 @media (max-width: 1000px) {
   .js .story {
-    --pw: 104px;
-    --ph: 70px;
-    --off: 7px;
-    --pile-lift: 24px;
+    --pw: 76px;
+    --off: 22px;
+    --pile-lift: 34px;
   }
 
   .js .pile .t {
-    margin: 9px 9px 4px;
-    font-size: 11px;
+    margin: 12px 7px 5px;
+    font-size: 10.5px;
   }
 }
 
@@ -2373,59 +2449,74 @@ html:not(.js) .flyer {
   opacity: 1;
 }
 
-.pile .sheet {
-  position: absolute;
-  inset: 0;
-  border-radius: 16px;
-  background: var(--dark-1);
-  transition:
-    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-    background-color 0.5s ease,
-    opacity 0.5s ease,
-    box-shadow 0.3s ease;
-}
-
-.pile .sheet[data-d="0"] {
-  z-index: 3;
-  background: color-mix(in srgb, var(--bg) 90%, transparent);
-  box-shadow:
-    inset 0 0 0 1px color-mix(in srgb, var(--shadow) 12%, transparent),
-    0 16px 30px -14px color-mix(in srgb, var(--shadow) 42%, transparent);
-  backdrop-filter: blur(8px);
-}
-
-.pile .sheet[data-d="1"] {
-  z-index: 2;
-  transform: translate(calc(var(--off) * -1), calc(var(--off) * -1));
-}
-
-.pile .sheet[data-d="2"] {
-  z-index: 1;
-  opacity: 0.35;
-  transform: translate(calc(var(--off) * -2), calc(var(--off) * -2));
-}
-
-.pile .sheet[data-d="3"] {
-  z-index: 0;
-  opacity: 0;
-  transform: translate(calc(var(--off) * -3), calc(var(--off) * -3));
-}
-
-/* a new sheet drops onto the pile from just above it */
-.pile .sheet.enter {
-  opacity: 0;
-  transform: translateY(-16px) scale(1.06);
+/* a paste: a copy of what is on the clipboard (without the sheets) leaves it for the field;
+   home.js sets its size and moves it, and it is there only while it moves */
+.js .pile.pdrop {
+  position: fixed;
+  z-index: 15;
+  transform-origin: 0 0;
   transition: none;
 }
 
-.pile.lit .sheet[data-d="0"] {
-  box-shadow:
-    0 0 0 3px var(--bg),
-    0 0 0 6px var(--accent),
-    0 16px 30px -14px color-mix(in srgb, var(--shadow) 42%, transparent);
+.pdrop .note {
+  inset: 0;
 }
 
+/* the two sheets: they never move, fade or change colour */
+.pile .sheet {
+  position: absolute;
+  inset: 0;
+  border-radius: calc(var(--pw) * 0.22);
+  transform-origin: 0 0;
+}
+
+/* the glass sheet in front */
+.pile .sheet[data-d="0"] {
+  z-index: 2;
+  background:
+    linear-gradient(135deg, var(--sheet-sheen), transparent 45%),
+    var(--sheet-glass);
+  box-shadow:
+    inset 0 0 0 1.5px var(--sheet-rim),
+    0 0 0 1px var(--sheet-edge),
+    0 6px 16px -4px var(--sheet-drop);
+  backdrop-filter: blur(10px) saturate(1.2);
+}
+
+/* the graphite sheet behind: up and to the left, a little smaller, as on the icon */
+.pile .sheet[data-d="1"] {
+  z-index: 1;
+  background: var(--slab);
+  transform: translate(calc(var(--off) * -1), calc(var(--off) * -1)) scale(0.963);
+}
+
+/* the front sheet's face: notes slide in from its top edge, under the clip */
 .pile .in {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+/* what is on the clipboard: the copied text or picture itself, straight on the glass, below the clip.
+   Only one at a time: a new one slides down in from under the clip as the one before slides on down
+   and out through the bottom edge (the sheet's face clips both, so nothing fades). */
+.pile .note {
+  position: absolute;
+  inset: 17% 9% 9%;
+  transition: transform 0.32s var(--motion);
+}
+
+.pile .note.drop {
+  transform: translateY(-120%);
+  transition: none;
+}
+
+.pile .note:not([data-n="0"]) {
+  transform: translateY(130%);
+}
+
+.pile .c {
   position: absolute;
   inset: 0;
   display: flex;
@@ -2433,22 +2524,18 @@ html:not(.js) .flyer {
   justify-content: center;
   overflow: hidden;
   border-radius: inherit;
-  transition: opacity 0.3s ease;
-}
-
-.pile .sheet:not([data-d="0"]) .in {
-  opacity: 0;
 }
 
 .pile .t {
   display: -webkit-box;
-  margin: 12px 12px 6px;
+  margin: 4px 6px;
   overflow: hidden;
-  font-size: 13px;
+  font-size: 11.5px;
   font-weight: 600;
-  line-height: 1.35;
+  line-height: 1.25;
   color: var(--ink);
   text-align: center;
+  word-break: keep-all;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
@@ -2464,76 +2551,80 @@ html:not(.js) .flyer {
   box-shadow: none;
 }
 
+/* the clip: a graphite pill across the front sheet's top edge, with a light edge, over the notes */
 .pile .clip {
   position: absolute;
-  left: 50%;
-  top: -7px;
-  width: 46%;
-  height: 13px;
-  border-radius: 7px;
-  background: var(--dark-1);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--bg) 62%, transparent);
-  opacity: 0;
-  translate: -50% 0;
-  transition: opacity 0.3s ease;
+  z-index: 4;
+  left: 24.1%;
+  top: -7.2%;
+  width: 52%;
+  height: 15.9%;
+  border-radius: 999px;
+  background: var(--slab);
+  box-shadow: 0 0 0 2px var(--sheet-rim);
 }
 
-.pile .sheet[data-d="0"] .clip {
-  opacity: 1;
+.pile .sheet[data-d="1"] .clip {
+  display: none;
 }
 
-/* dark facts */
+/* facts: the app's dark screen (its charcoal ground, light grey words). The measurement and its
+   caption on one side, the three facts as ruled rows like the app's list on the other. */
 .hfacts {
-  padding: 120px 22px;
+  padding: 112px 22px;
   background: var(--night);
   color: var(--night-ink);
 }
 
 .hfacts .in {
-  max-width: 980px;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: 40px clamp(40px, 6vw, 96px);
+  align-items: start;
+  max-width: 1080px;
   margin: 0 auto;
 }
 
 .hfacts .big {
-  font-size: clamp(56px, 11vw, 128px);
+  font-size: clamp(48px, 7vw, 92px);
   font-weight: 700;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.04em;
   line-height: 1;
 }
 
 .hfacts .cap {
-  max-width: 26em;
+  max-width: 22em;
   margin-top: 16px;
-  font-size: clamp(17px, 2vw, 21px);
+  font-size: clamp(17px, 1.8vw, 20px);
   line-height: 1.45;
   color: var(--night-muted);
 }
 
-.hfacts .grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 40px;
-  margin-top: 96px;
-  padding-top: 36px;
+.hfacts .rows li {
+  padding: 20px 0 22px;
   border-top: 1px solid var(--night-line);
 }
 
-.hfacts h3 {
-  margin-bottom: 10px;
-  font-size: 21px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+.hfacts .rows li:first-child {
+  padding-top: 6px;
+  border-top: 0;
 }
 
-.hfacts .grid p {
-  font-size: 15px;
+.hfacts h3 {
+  margin-bottom: 6px;
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.hfacts .rows p {
+  font-size: 16px;
   line-height: 1.55;
   color: var(--night-muted);
 }
 
 .price {
   padding: 120px 22px;
-  background: var(--mist);
   text-align: center;
 }
 
@@ -2568,54 +2659,69 @@ html:not(.js) .flyer {
   text-underline-offset: 3px;
 }
 
-/* more uses: links to the use pages, guides and the install guide */
+/* more uses: links to the use pages, guides and the install guide, drawn as the app's list rows
+   (name, its line under it, the row chevron; hairlines between) */
 .hmore {
-  max-width: 980px;
+  max-width: 760px;
   margin: 0 auto;
-  padding: 72px 22px 80px;
+  padding: 24px 22px 96px;
 }
 
 .hmore h2 {
-  margin-bottom: 20px;
+  margin-bottom: 8px;
   font-size: 21px;
   font-weight: 700;
   letter-spacing: -0.02em;
 }
 
-.hmore ul {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0 40px;
-}
-
-.hmore li {
-  padding: 14px 0 18px;
-  border-top: 1px solid var(--line);
+.hmore li + li {
+  border-top: 1px solid var(--hair);
 }
 
 .hmore a {
-  display: inline-flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 16px;
   align-items: center;
-  min-height: 32px;
-  font-size: 17px;
-  font-weight: 600;
+  padding: 16px 0;
 }
 
-.hmore li p {
+.hmore .t {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.hmore .d {
+  grid-row: 2;
   margin-top: 4px;
   font-size: 15px;
   line-height: 1.5;
   color: var(--muted);
 }
 
-.hmore a:hover {
-  color: var(--accent);
+.hmore a svg {
+  grid-row: 1 / 3;
+  grid-column: 2;
+  width: 20px;
+  height: 20px;
+  color: var(--faint);
+  transition: transform 0.2s ease;
+}
+
+.hmore a:hover svg {
+  transform: translateX(3px);
+}
+
+.hmore a:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+  border-radius: 8px;
 }
 
 @media (max-width: 700px) {
   .hm .cta-row .btn {
-    justify-content: center;
-    min-width: 256px;
+    min-width: 272px;
   }
 
   .hero {
@@ -2631,14 +2737,12 @@ html:not(.js) .flyer {
     width: 140px;
   }
 
-  .hfacts .grid,
-  .hmore ul {
-    grid-template-columns: minmax(0, 1fr);
+  .hfacts {
+    padding-block: 88px;
   }
 
-  .hfacts .grid {
-    gap: 28px;
-    margin-top: 64px;
+  .hfacts .in {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
