@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-ZCR/f1I+oH8uh9ZNyXAsFLlLx69JqvR7YFJEcf7riWA=' 'sha256-0RB5wFBBWHONHx49or958Jm7knGqgvUIxMjlTF1pK40=' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Samepaste 问题排查：手机和电脑之间复制粘贴不灵的时候</title>
-<meta name="description" content="手机和电脑之间复制粘贴用不了时，照着一步一步来的解决办法。大多数不管你用什么应用都适用。">
+<title>Samepaste 问题排查：手机和电脑之间的复制粘贴与照片</title>
+<meta name="description" content="在安卓手机和 Windows 电脑之间传文字、照片和截图的方法，以及复制粘贴失灵时可以依次尝试的步骤。大多数不管你用什么应用都适用。">
 <meta name="google-site-verification" content="X1Fdm3qgcZL0fxZb0DUC_CoPrCLImJnclVfOPvJtCV0">
 <meta name="naver-site-verification" content="fe8f8d718c2e4a43be8d1299fa1e49fc2697673d">
 <meta name="msvalidate.01" content="C7D5EFD633845BE2F704FF82D857FABB">
@@ -18,8 +18,8 @@
 <link rel="alternate" hreflang="x-default" href="https://samepaste.com/guides/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Samepaste">
-<meta property="og:title" content="Samepaste 问题排查：手机和电脑之间复制粘贴不灵的时候">
-<meta property="og:description" content="手机和电脑之间复制粘贴用不了时，照着一步一步来的解决办法。大多数不管你用什么应用都适用。">
+<meta property="og:title" content="Samepaste 问题排查：手机和电脑之间的复制粘贴与照片">
+<meta property="og:description" content="在安卓手机和 Windows 电脑之间传文字、照片和截图的方法，以及复制粘贴失灵时可以依次尝试的步骤。大多数不管你用什么应用都适用。">
 <meta property="og:url" content="https://samepaste.com/zh-hans/guides/">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:locale:alternate" content="en_US">
@@ -31,8 +31,8 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Samepaste：Windows 电脑和 Android 手机共用一个剪贴板">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Samepaste 问题排查：手机和电脑之间复制粘贴不灵的时候">
-<meta name="twitter:description" content="手机和电脑之间复制粘贴用不了时，照着一步一步来的解决办法。大多数不管你用什么应用都适用。">
+<meta name="twitter:title" content="Samepaste 问题排查：手机和电脑之间的复制粘贴与照片">
+<meta name="twitter:description" content="在安卓手机和 Windows 电脑之间传文字、照片和截图的方法，以及复制粘贴失灵时可以依次尝试的步骤。大多数不管你用什么应用都适用。">
 <meta name="twitter:image" content="https://samepaste.com/og-zh-hans.png">
 <meta name="theme-color" content="#f6f8fa" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0a1219" media="(prefers-color-scheme: dark)">
@@ -67,10 +67,15 @@ if(!ask||get('sp-consent')==='granted')S.load()})();</script>
 </nav>
 </header>
 <main class="wrap g-index">
-<h1 class="g-title">卡住的时候</h1>
-<p class="lede">手机和电脑之间复制粘贴用不了时，照着一步一步来的解决办法。大多数不管你用什么应用都适用。</p>
+<h1 class="g-title">手机和电脑之间</h1>
+<p class="lede">在安卓手机和 Windows 电脑之间传文字、照片和截图的方法，以及复制粘贴失灵时可以依次尝试的步骤。大多数不管你用什么应用都适用。</p>
 <ul class="also sp-guides">
-<li><span class="g-name"><a class="nm" href="../../guides/phone-screen-off-stops-sync/" lang="en">Clipboard sync stops when your phone screen is off</a> <span class="tag">英文</span></span><span class="also-line" lang="en">Android puts the app to sleep to save battery. Lift the battery limit for that one app.</span><span class="meta"><span>安卓</span><time datetime="2026-11-18">2026-11-18</time></span></li>
+<li><span class="g-name"><a class="nm" href="../../guides/phone-screen-off-stops-sync/" lang="en">Clipboard sync stops when your phone screen is off</a> <span class="tag">英文</span></span><span class="meta"><time datetime="2026-11-18">2026-11-18</time></span></li>
+<li><span class="g-name"><a class="nm" href="../../guides/transfer-screenshots-phone-to-laptop/" lang="en">How to transfer screenshots from your phone to your laptop</a> <span class="tag">英文</span></span><span class="meta"><time datetime="2026-11-20">2026-11-20</time></span></li>
+<li><span class="g-name"><a class="nm" href="../../guides/phone-link-copy-paste-not-working/" lang="en">Phone Link copy and paste not working? First check that your phone is supported</a> <span class="tag">英文</span></span><span class="meta"><time datetime="2026-11-20">2026-11-20</time></span></li>
+<li><span class="g-name"><a class="nm" href="../../guides/copy-paste-phone-to-computer/" lang="en">How do I copy and paste from my phone to my computer?</a> <span class="tag">英文</span></span><span class="meta"><time datetime="2026-11-20">2026-11-20</time></span></li>
+<li><span class="g-name"><a class="nm" href="../../guides/kde-connect-clipboard-sync-not-working/" lang="en">KDE Connect clipboard sync not working from your Android phone</a> <span class="tag">英文</span></span><span class="meta"><time datetime="2026-11-20">2026-11-20</time></span></li>
+<li><span class="g-name"><a class="nm" href="../../guides/send-photo-phone-to-pc/" lang="en">How do I send a picture from my phone to my computer?</a> <span class="tag">英文</span></span><span class="meta"><time datetime="2026-11-20">2026-11-20</time></span></li>
 </ul>
 </main>
 <footer class="wrap foot-site">

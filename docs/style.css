@@ -3108,7 +3108,8 @@ summary:focus-visible {
 }
 
 .sp-guides li {
-  grid-template-columns: minmax(0, 17em) minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
 }
 
 .sp-guides .nm,
@@ -3253,6 +3254,10 @@ summary:focus-visible {
   margin-top: 36px;
 }
 
+.g-quote-one {
+  grid-template-columns: minmax(0, 40em);
+}
+
 .g-quotes blockquote {
   margin: 0;
   padding-top: 16px;
@@ -3278,7 +3283,10 @@ summary:focus-visible {
 
 .g-quotes cite a,
 .g-aside a:not(.more),
-.pv a {
+.pv a,
+.a-sec p a,
+.a-sec .facts a,
+.answer .g-intro a {
   text-decoration: underline;
   text-decoration-color: var(--water);
   text-underline-offset: 3px;
@@ -3441,6 +3449,137 @@ summary:focus-visible {
 
 .use-cta .cta {
   margin-top: 24px;
+}
+
+/* a search answer: sections one step under the title; the usual ways as ruled rows of counted steps
+   (each step a white chip, so a longer way reads longer), Samepaste's row on the app's slab */
+
+.a-sec {
+  margin-top: clamp(64px, 8vw, 104px);
+}
+
+.a-sec > p {
+  max-width: 64ch;
+  margin-top: 16px;
+  font-size: 17px;
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+
+.a-sec .u-steps p {
+  max-width: 60ch;
+}
+
+.a-sec .facts {
+  max-width: 64ch;
+  margin-top: 20px;
+}
+
+.a-sec .facts li {
+  color: var(--ink);
+}
+
+.ways {
+  margin-top: 28px;
+}
+
+.ways + p {
+  margin-top: 28px;
+}
+
+.way {
+  display: grid;
+  grid-template-columns: minmax(0, 12em) minmax(0, 1fr);
+  gap: 12px clamp(20px, 3vw, 48px);
+  padding-block: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.way:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.way-head h3 {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.way-n {
+  margin-top: 4px;
+  font-size: 15px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.chain {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: start;
+  gap: 8px;
+  counter-reset: chain;
+}
+
+.chain li {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  max-width: 100%;
+  padding: 7px 14px 8px 11px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--card);
+  font-size: 15px;
+  line-height: 1.4;
+  counter-increment: chain;
+}
+
+.chain li::before {
+  content: counter(chain);
+  flex: none;
+  font-size: 13px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+}
+
+.way-ours .chain li {
+  border-color: var(--slab);
+  background: var(--slab);
+  color: var(--slab-ink);
+}
+
+.way-ours .chain li::before {
+  color: color-mix(in srgb, var(--slab-ink) 72%, transparent);
+}
+
+.way-note {
+  grid-column: 2;
+  max-width: 64ch;
+  font-size: 15px;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+
+.way-note a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--water);
+  text-underline-offset: 3px;
+}
+
+.a-code {
+  grid-column: 2;
+  margin-top: 14px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--card);
+  overflow-x: auto;
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.7;
+  white-space: pre;
 }
 
 /* downloads: buttons with their icon (the app's line icons, in the button's round well), the
@@ -3669,7 +3808,7 @@ summary:focus-visible {
     gap: 8px;
   }
 
-  .sp-guides .also-line,
+  .sp-guides .g-name,
   .sp-guides .meta {
     grid-column: 1;
     grid-row: auto;
@@ -3731,6 +3870,26 @@ summary:focus-visible {
 
   .u-steps li::before {
     font-size: 36px;
+  }
+
+  /* a way: its name and count, then its steps, then the note, one under another */
+  .way {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .way-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 12px;
+  }
+
+  .way-n {
+    margin-top: 0;
+  }
+
+  .way-note {
+    grid-column: 1;
   }
 
   /* each row becomes a small block: the name, then its cells, each under its column's name */
