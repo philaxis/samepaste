@@ -1750,6 +1750,257 @@ html:has(body.home) {
   height: 11px;
 }
 
+/* one phone: a screenshot of a walking route, then the memo app it is pasted into (home.mjs onePhone).
+   The screenshot is drawn once at the screen's size and scaled by --k wherever it shows. */
+.shot {
+  position: relative;
+  width: calc(182px * var(--k));
+  height: calc(406px * var(--k));
+  overflow: hidden;
+}
+
+.mshot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 182px;
+  height: 406px;
+  overflow: hidden;
+  background: var(--map-land);
+  transform: scale(var(--k));
+  transform-origin: 0 0;
+}
+
+.mshot > svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.mshot .sbar {
+  position: relative;
+  z-index: 2;
+}
+
+.mroute {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: 36px;
+  z-index: 2;
+  padding: 8px 12px;
+  border-radius: 14px;
+  background: var(--bg);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--shadow) 14%, transparent);
+}
+
+.mroute b {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.mroute small {
+  display: block;
+  margin-top: 2px;
+  font-size: 9.5px;
+  color: var(--muted);
+}
+
+.mshot .mme {
+  left: 22px;
+  top: 374px;
+}
+
+.rpin {
+  position: absolute;
+  left: 113px;
+  top: 122px;
+  z-index: 1;
+  width: 26px;
+}
+
+.rpin svg {
+  display: block;
+  width: 26px;
+  height: 34px;
+  filter: drop-shadow(0 3px 3px color-mix(in srgb, var(--shadow) 30%, transparent));
+}
+
+/* the phone alone: its side keys (pressed together for the screenshot) */
+.solo .keys {
+  position: absolute;
+  right: -5px;
+  top: 100px;
+  width: 3px;
+  height: 44px;
+  border-radius: 0 2px 2px 0;
+  background: var(--edge);
+  transition: translate 0.15s;
+}
+
+.solo .keys::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 62px;
+  width: 3px;
+  height: 28px;
+  border-radius: inherit;
+  background: inherit;
+}
+
+.scene.st1:not(.st2) .solo .keys {
+  translate: -2px 0;
+}
+
+.solo > .screen > .shot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: transform 0.35s var(--motion);
+}
+
+.js .scene.st3 .solo > .screen > .shot {
+  transform: translateX(-30%);
+}
+
+/* the screenshot shrinks from the whole screen into its thumbnail in the corner, as Android shows it */
+.sthumb {
+  position: absolute;
+  left: 12px;
+  bottom: 16px;
+  z-index: 3;
+  border: 2px solid var(--bg);
+  border-radius: 8px;
+  box-shadow: 0 8px 20px -6px color-mix(in srgb, var(--shadow) 45%, transparent);
+  transform-origin: 0 100%;
+}
+
+.sthumb .shot {
+  border-radius: 6px;
+}
+
+.js .scene.st1 .sthumb {
+  animation: hm-shot 0.45s var(--motion);
+}
+
+@keyframes hm-shot {
+  from {
+    transform: translate(-14px, 16px) scale(3.15);
+  }
+}
+
+/* the memo app slides in over the map */
+.memo {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  box-shadow: -8px 0 24px color-mix(in srgb, var(--shadow) 12%, transparent);
+  transition: transform 0.35s var(--motion);
+}
+
+.js .scene:not(.st3) .memo {
+  transform: translateX(calc(100% + 36px));
+}
+
+.mhead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px 8px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.mhead span {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.mbody {
+  padding: 6px 16px 0;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.mbody .mtitle {
+  margin-bottom: 6px;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+}
+
+.mslot {
+  position: relative;
+  margin-top: 12px;
+}
+
+.mcar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1.5px;
+  height: 15px;
+  background: var(--ink);
+  animation: hm-blink 1s steps(1) infinite;
+}
+
+.scene.st5 .mcar {
+  visibility: hidden;
+}
+
+/* a long press offers Paste, as Android's text toolbar does */
+.mpop {
+  position: absolute;
+  left: -2px;
+  top: 22px;
+  z-index: 2;
+  padding: 6px 12px;
+  border-radius: 10px;
+  background: var(--bg);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--shadow) 22%, transparent);
+  font-size: 10.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition:
+    opacity 0.25s var(--motion),
+    transform 0.25s var(--motion);
+}
+
+.js .scene:not(.st4) .mpop {
+  transform: translateY(-4px);
+}
+
+.mimg {
+  width: fit-content;
+  border-radius: 10px;
+}
+
+.mimg .shot {
+  border-radius: 10px;
+}
+
+.mimg > .s5 {
+  border-radius: 10px;
+  box-shadow: 0 0 0 1px var(--hair);
+  transition: opacity 0.25s var(--motion);
+}
+
+@media (max-width: 700px) {
+  /* alone on the stage, the phone takes the room the laptop leaves elsewhere */
+  .dev.phone.solo {
+    --pb: 1.75;
+  }
+}
+
 /* tablet notes */
 .notes {
   position: absolute;
@@ -2203,6 +2454,14 @@ html:not(.js) .flyer {
 .flyer .ph.bookph,
 .pile .ph.bookph {
   font-size: 3.4px;
+}
+
+/* the one-phone screenshot on the clipboard: framed like the photos above, at its own portrait shape */
+.flyer .shot,
+.pile .shot {
+  border: 2px solid var(--bg);
+  border-radius: 8px;
+  box-shadow: 0 12px 30px -8px color-mix(in srgb, var(--shadow) 50%, transparent);
 }
 
 .rowctl {

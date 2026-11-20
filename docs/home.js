@@ -37,6 +37,9 @@
     },
     // the photo is in the message field the moment it is pasted (step 5)
     search: { marks: [600, 1300, 2100, 2700, 3500], flights: [[2700, 3500]] },
+    // one phone: the screenshot (1) is on the clipboard (2); the memo app slides in (3), a long press
+    // offers Paste (4) and the screenshot is in the note (5)
+    solo: { marks: [600, 1200, 2100, 2800, 3500], flights: [[1200, 3500]] },
   };
   var PLANS = {};
   Object.keys(RAW).forEach(function (k) {

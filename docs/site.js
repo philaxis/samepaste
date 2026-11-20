@@ -69,6 +69,7 @@
 
   // A scene, played once each time it comes into view: the thing is picked up on the first
   // device (selected, or the camera flashes), a copy of it flies across and is pasted on the second.
+  // A one-phone scene swaps to its second app (data-swap) as the copy sets off.
   var S_PICK = 500;
   var S_FLY = [1100, 1900];
   var S_DONE = 1750;
@@ -84,6 +85,7 @@
     function frame(now) {
       var t = now - start;
       set(el, "pick", t >= S_PICK);
+      set(el, "swap", t >= S_FLY[0]);
       set(el, "done", t >= S_DONE);
       if (t >= S_FLY[0] && t < S_FLY[1]) fly(src, dst, (t - S_FLY[0]) / (S_FLY[1] - S_FLY[0]));
       else fly(null, null, null);
@@ -93,6 +95,7 @@
       function (entries) {
         if (!entries[0].isIntersecting || raf) return;
         set(el, "done", false);
+        set(el, "swap", false);
         set(el, "pick", false);
         start = performance.now();
         raf = requestAnimationFrame(frame);

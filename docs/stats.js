@@ -123,8 +123,8 @@
     gtag("event", name, params);
   };
 
-  // Scene ids as data-scene-view (lecture, address, search, otp on the home page; otp, link,
-  // photo_ai, tablet_note on the use pages). lastScene feeds download_click.
+  // Scene ids as data-scene-view (lecture, address, search, otp, one_phone on the home page; otp, link,
+  // photo_ai, tablet_note, one_phone on the use pages). lastScene feeds download_click.
   var lastScene = "none";
   document.addEventListener("click", function (e) {
     var a = e.target.closest && e.target.closest("[data-cta], a[data-lang]");
