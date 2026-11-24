@@ -3695,6 +3695,33 @@ summary:focus-visible {
   text-underline-offset: 4px;
 }
 
+/* the short pages the apps point to (/pc/, /android/): the app icon, the name, the same-account
+   sentence and one download, all on the first phone screen */
+
+.short {
+  padding-top: clamp(40px, 8vh, 96px);
+  padding-bottom: clamp(56px, 9vw, 112px);
+}
+
+.short-mark {
+  display: block;
+  width: 72px;
+  height: 72px;
+  margin-bottom: 24px;
+}
+
+.short .lede {
+  margin-top: 16px;
+}
+
+.short .cta {
+  margin-top: 32px;
+}
+
+.short .u-note {
+  margin-top: 4px;
+}
+
 /* privacy tables */
 
 .tbl {
