@@ -3737,6 +3737,21 @@ summary:focus-visible {
   color: var(--muted);
 }
 
+/* a comparison table's own row (Samepaste): a white card on the grey page, name and count bold, so it
+   reads without the colour. The table's first column steps in to leave the card its edge. */
+.tbl-ours th:first-child {
+  padding-left: 12px;
+}
+
+.tbl tr.ours > * {
+  background: var(--card);
+}
+
+.tbl tr.ours > th,
+.tbl tr.ours > td:nth-child(2) {
+  font-weight: 650;
+}
+
 .privacy .facts {
   max-width: 64ch;
   margin-top: 16px;
@@ -3926,6 +3941,23 @@ summary:focus-visible {
     font-size: 13px;
     font-weight: 600;
     color: var(--muted);
+  }
+
+  .tbl-ours tr {
+    padding-inline: 12px;
+  }
+
+  .tbl-ours th:first-child {
+    padding-left: 0;
+  }
+
+  .tbl tr.ours {
+    background: var(--card);
+    border-radius: 12px;
+  }
+
+  .tbl tr.ours > * {
+    background: none;
   }
 
   .consent-btns {
