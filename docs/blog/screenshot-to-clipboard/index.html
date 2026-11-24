@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-ZCR/f1I+oH8uh9ZNyXAsFLlLx69JqvR7YFJEcf7riWA=' 'sha256-0RB5wFBBWHONHx49or958Jm7knGqgvUIxMjlTF1pK40=' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Copy a screenshot to the clipboard on Android as you take it · Samepaste</title>
-<meta name="description" content="How to get an Android or Samsung screenshot onto the clipboard right away. The screenshot toolbar has no copy button; Samsung Keyboard has a setting, and Samepaste puts it on the phone’s and the PC’s clipboard as you take it.">
+<meta name="description" content="The Android screenshot toolbar has no copy button. Samepaste puts each screenshot on the phone’s and the PC’s clipboard as you take it: long-press and Paste on the phone, Ctrl+V on the PC.">
 <meta name="google-site-verification" content="X1Fdm3qgcZL0fxZb0DUC_CoPrCLImJnclVfOPvJtCV0">
 <meta name="naver-site-verification" content="fe8f8d718c2e4a43be8d1299fa1e49fc2697673d">
 <meta name="msvalidate.01" content="C7D5EFD633845BE2F704FF82D857FABB">
@@ -16,7 +16,7 @@
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Samepaste">
 <meta property="og:title" content="Copy a screenshot to the clipboard on Android as you take it · Samepaste">
-<meta property="og:description" content="How to get an Android or Samsung screenshot onto the clipboard right away. The screenshot toolbar has no copy button; Samsung Keyboard has a setting, and Samepaste puts it on the phone’s and the PC’s clipboard as you take it.">
+<meta property="og:description" content="The Android screenshot toolbar has no copy button. Samepaste puts each screenshot on the phone’s and the PC’s clipboard as you take it: long-press and Paste on the phone, Ctrl+V on the PC.">
 <meta property="og:url" content="https://samepaste.com/blog/screenshot-to-clipboard/">
 <meta property="og:locale" content="en_US">
 <meta property="og:locale:alternate" content="ko_KR">
@@ -26,7 +26,7 @@
 <meta property="og:image:alt" content="Samepaste: one clipboard for your Windows PC and Android phone">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Copy a screenshot to the clipboard on Android as you take it · Samepaste">
-<meta name="twitter:description" content="How to get an Android or Samsung screenshot onto the clipboard right away. The screenshot toolbar has no copy button; Samsung Keyboard has a setting, and Samepaste puts it on the phone’s and the PC’s clipboard as you take it.">
+<meta name="twitter:description" content="The Android screenshot toolbar has no copy button. Samepaste puts each screenshot on the phone’s and the PC’s clipboard as you take it: long-press and Paste on the phone, Ctrl+V on the PC.">
 <meta name="twitter:image" content="https://samepaste.com/og-en.png">
 <meta name="theme-color" content="#f6f8fa" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0a1219" media="(prefers-color-scheme: dark)">
@@ -50,7 +50,7 @@ if(get('sp-stats')==='off'){window['ga-disable-'+id]=true;return}
 if(!ask||get('sp-consent')==='granted')S.load()})();</script>
 <link rel="stylesheet" href="../../style.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Samepaste","applicationCategory":"UtilitiesApplication","operatingSystem":"Windows 10, Windows 11, Android 11+","description":"Copy on your Windows PC, paste on your Android phone or tablet, and the other way. Photos and screenshots land on both clipboards as you take them. Open beta, free to download.","url":"https://samepaste.com/","inLanguage":"en","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","name":"philaxis","url":"https://github.com/philaxis"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"How to copy a screenshot to the clipboard on Android, the moment you take it","description":"How to get an Android or Samsung screenshot onto the clipboard right away. The screenshot toolbar has no copy button; Samsung Keyboard has a setting, and Samepaste puts it on the phone's and the PC's clipboard as you take it.","url":"https://samepaste.com/blog/screenshot-to-clipboard/","mainEntityOfPage":"https://samepaste.com/blog/screenshot-to-clipboard/","inLanguage":"en","datePublished":"2026-11-24","dateModified":"2026-11-24","image":"https://samepaste.com/og-en.png","author":{"@type":"Person","name":"philaxis","url":"https://github.com/philaxis"},"publisher":{"@type":"Person","name":"philaxis","url":"https://github.com/philaxis"},"about":{"@type":"SoftwareApplication","name":"Samepaste"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"How to copy a screenshot to the clipboard on Android, the moment you take it","description":"The Android screenshot toolbar has no copy button. Samepaste puts each screenshot on the phone's and the PC's clipboard as you take it: long-press and Paste on the phone, Ctrl+V on the PC.","url":"https://samepaste.com/blog/screenshot-to-clipboard/","mainEntityOfPage":"https://samepaste.com/blog/screenshot-to-clipboard/","inLanguage":"en","datePublished":"2026-11-24","dateModified":"2026-11-24","image":"https://samepaste.com/og-en.png","author":{"@type":"Person","name":"philaxis","url":"https://github.com/philaxis"},"publisher":{"@type":"Person","name":"philaxis","url":"https://github.com/philaxis"},"about":{"@type":"SoftwareApplication","name":"Samepaste"}}</script>
 </head>
 <body>
 <header class="wrap top">
@@ -66,24 +66,21 @@ if(!ask||get('sp-consent')==='granted')S.load()})();</script>
 <nav class="crumbs" aria-label="Breadcrumb"><a href="../../">Samepaste</a><a href="../../blog/">Blog</a></nav>
 <h1 class="g-title">How to copy a screenshot to the clipboard on Android, the moment you take it</h1>
 <p class="meta g-meta"><span>Written by <a href="https://github.com/philaxis" rel="author">philaxis</a></span></p>
-<div class="g-intro"><p>You take a screenshot because you want to put it somewhere: a chat, a note, ChatGPT, a document on the PC. But on Android a screenshot is only a file in the gallery. To paste it you have to find that file again and share it or pick it.</p><p>Here is what the phone already offers, then the way that puts the screenshot on the clipboard as you take it. Other apps' menu names are quoted only where their official help uses them.</p></div>
+<div class="g-intro"><p>To paste a screenshot anywhere, you open the gallery again first. That kept breaking my flow, so I made screenshots land on the clipboard the moment they’re taken. Long-press and Paste on the phone, Ctrl+V on the PC.</p></div>
 <section class="a-sec" aria-labelledby="a-0">
-<h2 class="u-h" id="a-0">The screenshot toolbar has no copy button</h2>
-<p>After a screenshot a Galaxy shows a few options at the bottom of the screen. <a href="https://www.samsung.com/us/support/answer/ANS10002500/">Samsung’s help</a> describes scroll capture and drawing or cropping there, and sends you to the Gallery to share. It mentions no way to copy the screenshot to the clipboard. Google’s <a href="https://support.google.com/android/answer/9075928?hl=en">Android help</a> also mentions only sharing and editing after a screenshot.</p>
-<p>So the usual way is to pick the picture from inside the app you want it in. Counted from the moment it’s taken:</p><ol class="ways"><li class="way"><div class="way-head"><h3>Pick it in the app (ChatGPT app)</h3><p class="way-n">4 steps</p></div><ol class="chain"><li>Switch to the ChatGPT app</li><li>Tap +</li><li>Add photos &amp; files</li><li>Find and tap the screenshot</li></ol><p class="way-note">Most apps work the same way: a button next to the text box opens a picker, and you find the newest picture. <a href="https://help.openai.com/en/articles/8400551-chatgpt-image-inputs-faq">OpenAI help</a></p></li></ol>
+<h2 class="u-h" id="a-0">What the phone gives you</h2>
+<p>After a screenshot a Galaxy offers scroll capture, drawing and sharing, but no copy (<a href="https://www.samsung.com/us/support/answer/ANS10002500/">Samsung’s help</a>). So you pick the picture again inside the app: in the ChatGPT app that’s switch, +, Add photos &amp; files, pick. Four taps.</p>
+<p>Samsung Keyboard has a Save screenshots to clipboard setting (<a href="https://www.samsung.com/us/support/answer/ANS10002016/">Samsung’s help</a>). With it on, the screenshot waits under Clipboard on the keyboard toolbar. Also four taps, and screenshots only.</p>
 </section>
 <section class="a-sec" aria-labelledby="a-1">
-<h2 class="u-h" id="a-1">Samsung Keyboard can keep screenshots on its clipboard</h2>
-<p>Samsung Keyboard’s settings include Save screenshots to clipboard: “You can save your screenshots to your device’s clipboard.” Open Settings and search for Samsung Keyboard to find it. (<a href="https://www.samsung.com/us/support/answer/ANS10002016/">Samsung’s help</a>)</p>
-<p>With it on, tap the text box of the app you want, open Clipboard on the keyboard toolbar and pick the screenshot.</p><ol class="ways"><li class="way"><div class="way-head"><h3>Samsung Keyboard clipboard</h3><p class="way-n">4 steps</p></div><ol class="chain"><li>Switch to the app</li><li>Tap the text box</li><li>Clipboard on the keyboard toolbar</li><li>Pick the screenshot</li></ol><p class="way-note">With the setting on, while you type with Samsung Keyboard. <a href="https://www.samsung.com/us/support/answer/ANS10002016/">Samsung’s help</a></p></li></ol><p>If you only use screenshots on the phone itself, that may be all you need. Samsung’s help describes it for screenshots only, not camera photos, and doesn’t say whether other keyboards or a PC can get at them. Users write that Gboard has something similar, but Google’s own help doesn’t describe it.</p>
+<h2 class="u-h" id="a-1">With Samepaste it’s already there</h2>
+<p>Samepaste makes the clipboards of your Android phone and Windows PC one. When a screenshot is saved, the original goes onto that phone’s clipboard and the PC’s. No send button.</p>
+<p>It’s Android’s own clipboard, so any keyboard works: switch to the app, long-press, Paste. Three taps. On the PC, one Ctrl+V.</p>
+<p>On an Android 15 emulator, pasting 1.4 seconds after the screenshot gave the saved file, byte for byte. Camera photos go the same way (<a href="../../blog/photo-to-clipboard/">a photo on the clipboard as you take it</a>).</p>
 </section>
 <section class="a-sec" aria-labelledby="a-2">
-<h2 class="u-h" id="a-2">Samepaste puts it on the clipboard as you take it</h2>
-<p>Samepaste makes the clipboards of your Android phone and Windows PC one. When a new picture appears in the Screenshots folder, it goes onto that phone’s clipboard at full quality, and onto the clipboard of the PC signed in with the same Google account. There’s no send button.</p><ol class="ways"><li class="way way-ours"><div class="way-head"><h3>Samepaste, pasting on the same phone</h3><p class="way-n">3 steps</p></div><ol class="chain"><li>Switch to the app</li><li>Long-press the text box</li><li>Paste</li></ol></li><li class="way way-ours"><div class="way-head"><h3>Samepaste, pasting on the PC</h3><p class="way-n">1 steps</p></div><ol class="chain"><li>Press Ctrl+V on the PC</li></ol></li></ol><p>It’s Android’s own clipboard, so it doesn’t matter which keyboard you use: anywhere a long-press offers Paste, the screenshot pastes.</p><p>On an Android 15 emulator, pasting 1.4 seconds after pressing the screenshot keys gave the new screenshot, byte for byte the same file. At 1.1 to 1.2 seconds the previous item was still there. A real phone may be a little faster or slower.</p><p>Camera photos go the same way: see <a href="../../blog/photo-to-clipboard/">a photo on the clipboard the moment you take it</a>. For every way’s taps side by side, see <a href="../../blog/taps-compared/">one screenshot to the PC, taps compared</a>.</p>
-</section>
-<section class="a-sec" aria-labelledby="a-3">
-<h2 class="u-h" id="a-3">What it needs, and what it won’t do</h2>
-<ul class="facts"><li>An Android 11 or later phone and a Windows 10 or 11 PC, signed in with the same Google account. No iPhone, iPad, Mac or Linux.</li><li>Photos and screenshots go by themselves on either version, with Camera photos and Screenshots on in Samepaste’s settings. Only those two folders count: pictures other apps save don’t travel.</li><li>The Google Play version handles photos and screenshots exactly like the version from this site.</li><li>The clipboard holds one thing, so the next copy or photo replaces it. By default the last 7 days stay in Samepaste’s history, where you can put an older one back.</li><li>Free during the open beta, on up to 10 devices.</li></ul>
+<h2 class="u-h" id="a-2">What it needs</h2>
+<p>An Android 11 or later phone and a Windows 10 or 11 PC, signed in with the same Google account. No iPhone, iPad, Mac or Linux. The Google Play version handles photos and screenshots the same way. Free during the open beta, on up to 10 devices.</p>
 </section>
 <section class="use-cta" aria-labelledby="a-get">
 <h2 class="u-h" id="a-get">Get Samepaste</h2>
