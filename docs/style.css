@@ -2521,6 +2521,12 @@ summary:focus-visible {
     gap: 6px;
   }
 
+  /* Five-language headers with Blog don't fit at 375px; the install guide stays one tap away under
+     every download button. */
+  .top nav > a.nav-install {
+    display: none;
+  }
+
   .top a.brand {
     gap: 6px;
     font-size: 15px;
